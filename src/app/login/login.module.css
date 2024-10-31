@@ -1,0 +1,94 @@
+.page {
+  background: linear-gradient(180deg, #f0f6ff 0%, #e6f0ff 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  padding-top: 80px;
+}
+
+.logo {
+  width: auto;
+  height: auto;
+}
+
+.whiteSection {
+  background: white;
+  width: 100%;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-align: center;
+  margin: 0;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.createAccountButton {
+  background: transparent;
+  color: #4a90e2;
+  border: 1px solid #4a90e2;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.loginButton {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+/* Responsividade */
+@media (max-width: 380px) {
+  .logoContainer {
+    padding-top: 60px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .createAccountButton,
+  .loginButton {
+    padding: 14px;
+    font-size: 13px;
+  }
+  
+  .whiteSection {
+    padding: 24px 20px;
+  }
+} 
