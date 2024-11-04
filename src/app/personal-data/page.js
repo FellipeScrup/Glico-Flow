@@ -1,8 +1,9 @@
 'use client'
-import Image from "next/image";
-import styles from "./personal-data.module.css";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import styles from "./personal-data.module.css";
 import logo from "@/assets/glicoflow-logo.png";
 
 export default function PersonalData() {
