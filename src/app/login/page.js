@@ -28,9 +28,11 @@ export default function Login() {
               CRIAR CONTA
             </button>
           </Link>
-          <button className={styles.loginButton}>
-            ENTRAR
-          </button>
+          <Link href="/signin">
+            <button className={styles.loginButton}>
+              ENTRAR
+            </button>
+          </Link>
         </div>
       </div>
     </div>
