@@ -1,0 +1,296 @@
+.page {
+    background: linear-gradient(180deg, #f0f6ff 0%, #e6f0ff 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 80px;
+}
+
+.firstContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.firstContainerImg {
+    margin-bottom: 24px;
+}
+
+.firstContainerText h1 {
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+    font-weight: 600;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.inputRow {
+    display: flex;
+    gap: 16px;
+}
+
+.inputGroup {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.inputGroup input,
+.inputGroup select {
+    width: 100%;
+    padding: 16px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #495057;
+    transition: all 0.3s ease;
+}
+
+.inputGroup label {
+    position: absolute;
+    left: 16px;
+    top: 0;
+    transform: translateY(-50%) scale(0.85);
+    background-color: #f8f9fa;
+    padding: 0 4px;
+    color: #6c757d;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.inputGroup input:focus,
+.inputGroup select:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.inputError {
+    border-color: #dc3545 !important;
+}
+
+.errorMessage {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    position: absolute;
+    left: 0;
+}
+
+.buttonContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px;
+    background-color: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.continueButton {
+    background-color: #007bff;
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    display: block;
+}
+
+.continueButton:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+.continueButton:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+    .inputRow {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .firstContainerText h1 {
+        font-size: 1.3rem;
+    }
+
+    .inputGroup input {
+        padding: 14px;
+    }
+
+    .continueButton {
+        padding: 14px;
+    }
+}
+
+.sexoGroup {
+    margin: 20px 0;
+}
+
+.sexoLabel {
+    display: block;
+    color: #495057;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.sexoOptions {
+    display: flex;
+    gap: 20px;
+}
+
+.radioGroup {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.radioGroup input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.radioGroup input[type="radio"]:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.radioGroup input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.radioGroup label {
+    color: #495057;
+    cursor: pointer;
+    font-size: 0.95rem;
+    user-select: none;
+}
+
+.radioGroup:hover input[type="radio"] {
+    border-color: #0056b3;
+}
+
+.radioGroup input[type="radio"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.sexoGroup .errorMessage {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    display: block;
+}
+
+@media (max-width: 480px) {
+    .sexoOptions {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .radioGroup {
+        padding: 8px 0;
+    }
+}
+
+.select {
+    width: 100%;
+    padding: 16px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #495057;
+    transition: all 0.3s ease;
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.select:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.select option {
+    padding: 12px;
+    font-size: 1rem;
+}
+
+.select::-ms-expand {
+    display: none;
+}
+
+/* Estilo para o placeholder do select */
+.select option[value=""] {
+    color: #6c757d;
+}
+
+/* Ajuste o estilo do label quando o select está focado ou tem valor */
+.inputGroup .select:focus + label,
+.inputGroup .select:not([value=""]) + label {
+    top: 0;
+    transform: translateY(-50%) scale(0.85);
+    background-color: #f8f9fa;
+    padding: 0 4px;
+}
+
+/* Ajuste para o erro no select */
+.select.inputError {
+    border-color: #dc3545;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .select {
+        padding: 14px;
+        padding-right: 36px;
+        background-size: 14px;
+    }
+} 

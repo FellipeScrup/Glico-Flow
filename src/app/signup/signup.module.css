@@ -226,4 +226,28 @@
         font-size: 0.8rem;
         color: #007bff;
     }
+
+    .inputError {
+        border-color: #ff4444 !important;
+    }
+
+    .errorMessage {
+        color: #ff4444;
+        font-size: 0.8rem;
+        margin-top: 4px;
+        display: block;
+        position: absolute;
+        bottom: -20px;
+        left: 12px;
+    }
+
+    .checkboxGroup {
+        position: relative;
+    }
+
+    .checkboxGroup .errorMessage {
+        position: absolute;
+        bottom: -18px;
+        left: 0;
+    }
     

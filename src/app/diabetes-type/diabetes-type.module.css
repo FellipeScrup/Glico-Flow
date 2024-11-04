@@ -1,0 +1,82 @@
+.page {
+    background: linear-gradient(180deg, #f0f6ff 0%, #e6f0ff 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+}
+
+.firstContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.firstContainerImg {
+    width: 250px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.firstContainerImg img {
+    width: 100%;
+    height: auto;
+}
+
+.firstContainerText h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #000;
+    padding: 0 15px;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 0 20px;
+}
+
+.optionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.optionButton {
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.optionButton:hover {
+    border-color: #007bff;
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+}
+
+.optionButton:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+    .firstContainerImg {
+        width: 200px;
+    }
+
+    .optionButton {
+        padding: 16px;
+        font-size: 1rem;
+    }
+} 
