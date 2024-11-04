@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./login.module.css";
 import logo from "@/assets/glicoflow-logo.png";
 
@@ -22,14 +23,19 @@ export default function Login() {
         </h1>
 
         <div className={styles.buttonContainer}>
-          <button className={styles.createAccountButton}>
-            CRIAR CONTA
-          </button>
-          <button className={styles.loginButton}>
-            ENTRAR
-          </button>
+          <Link href="/signup">
+            <button className={styles.createAccountButton}>
+              CRIAR CONTA
+            </button>
+          </Link>
+          <Link href="/signin">
+            <button className={styles.loginButton}>
+              ENTRAR
+            </button>
+          </Link>
         </div>
       </div>
     </div>
+    
   );
 } 
