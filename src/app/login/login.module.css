@@ -26,7 +26,7 @@
   align-items: center;
   gap: 32px;
   position: absolute;
-  bottom: 0;
+  bottom: 5rem;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -90,5 +90,77 @@
   
   .whiteSection {
     padding: 24px 20px;
+  }
+} 
+
+/* Adicione estas regras ao final de cada arquivo .module.css */
+
+@media (max-width: 380px) {
+  .page {
+    padding: 16px 12px;
+    padding-bottom: 80px;
+  }
+
+  .firstContainer {
+    margin-bottom: 20px;
+  }
+
+  .firstContainerImg {
+    width: 140px;
+  }
+
+  .container {
+    padding: 0 12px;
+  }
+
+  .inputGroup input,
+  .inputGroup select,
+  .select {
+    padding: 12px;
+    font-size: 16px; /* Evita zoom automático no iOS */
+  }
+
+  .buttonContainer {
+    padding: 12px;
+  }
+
+  .continueButton,
+  .criarContaButton,
+  .loginButton {
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .firstContainerText h1 {
+    font-size: 1.2rem;
+    padding: 0 10px;
+  }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 320px) {
+  .page {
+    padding: 12px 8px;
+  }
+
+  .firstContainerImg {
+    width: 120px;
+  }
+
+  .inputGroup input,
+  .inputGroup select,
+  .select {
+    padding: 10px;
+  }
+}
+
+/* Ajustes para altura da tela */
+@media (max-height: 667px) {
+  .logoContainer {
+    padding-top: 40px;
+  }
+
+  .firstContainer {
+    margin-bottom: 16px;
   }
 } 

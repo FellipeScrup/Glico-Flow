@@ -13,7 +13,10 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow: hidden;
+  height: 100%;
+  position: fixed;
+  width: 100%;
 }
 
 body {
@@ -28,6 +31,7 @@ body {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -39,4 +43,33 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+/* Adicione estas regras ao final do arquivo */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+input, button, select, textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 16px !important;
+  border-radius: 8px;
+}
+
+/* Ajuste para select */
+select {
+  background-image: url("data:image/svg+xml,...");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  padding-right: 40px !important;
 }
