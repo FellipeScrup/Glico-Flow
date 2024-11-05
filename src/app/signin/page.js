@@ -1,21 +1,22 @@
 'use client'
 import Image from "next/image";
-import styles from "./signin.module.css";
-import Link from "next/link";
-import logo from "@/assets/glicoflow-logo.png";
 import { useState } from "react";
+import styles from "./signin.module.css";
+import logo from "@/assets/glicoflow-logo.png";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-export default function Signin() {
+export default function SignIn() {
     const [formData, setFormData] = useState({
         email: '',
         senha: '',
         lembrar: false
     });
     const [errors, setErrors] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
 
     const validateEmail = (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
     };
 
     const handleInputChange = (e) => {
@@ -24,6 +25,9 @@ export default function Signin() {
             ...prev,
             [name]: type === 'checkbox' ? checked : value
         }));
+        if (errors[name]) {
+            setErrors(prev => ({ ...prev, [name]: '' }));
+        }
     };
 
     const handleSubmit = (e) => {
@@ -38,71 +42,93 @@ export default function Signin() {
 
         if (!formData.senha) {
             newErrors.senha = 'Senha é obrigatória';
+        } else if (formData.senha.length < 6) {
+            newErrors.senha = 'Senha deve ter no mínimo 6 caracteres';
         }
 
-        setErrors(newErrors);
-
-        if (Object.keys(newErrors).length === 0) {
-            // Aqui você pode adicionar a lógica de login
-            console.log('Formulário válido', formData);
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
         }
+
+        // Aqui vai a lógica de submissão do formulário
+        console.log('Form submitted:', formData);
     };
 
-    return(
-        <form onSubmit={handleSubmit} className={styles.page}>
-            <div className={styles.firstContainer}>
-                <div className={styles.firstContainerImg}>
-                    <Image src={logo} alt="GlicoFlow Logo" />
-                </div>
-                <div className={styles.firstContainerText}>
-                    <h1>Bem vindo de volta!</h1>
-                </div>
+    return (
+        <div className={styles.page}>
+            <div className={styles.logoContainer}>
+                <Image
+                    src={logo}
+                    alt="GlicoFlow Logo"
+                    width={320}
+                    height={320}
+                    priority
+                    className={styles.logo}
+                />
             </div>
-            <div className={styles.container}>
-                <div className={styles.form}>
+
+            <div className={styles.formContainer}>
+                <h1 className={styles.title}>Entrar</h1>
+                
+                <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
                         <input 
                             type="email" 
                             id="email" 
                             name="email"
-                            placeholder="Seu email:" 
                             value={formData.email}
                             onChange={handleInputChange}
                             className={errors.email ? styles.inputError : ''}
+                            placeholder="Email"
                         />
-                        <label htmlFor="email">Seu email:</label>
-                        {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
+                        {errors.email && (
+                            <span className={styles.errorMessage}>{errors.email}</span>
+                        )}
                     </div>
+
                     <div className={styles.inputGroup}>
-                        <input 
-                            type="password" 
-                            id="senha" 
-                            name="senha"
-                            placeholder="Sua senha:" 
-                            value={formData.senha}
-                            onChange={handleInputChange}
-                            className={errors.senha ? styles.inputError : ''}
-                        />
-                        <label htmlFor="senha">Sua senha:</label>
-                        {errors.senha && <span className={styles.errorMessage}>{errors.senha}</span>}
+                        <div className={styles.passwordWrapper}>
+                            <input 
+                                type={showPassword ? "text" : "password"}
+                                id="senha" 
+                                name="senha"
+                                value={formData.senha}
+                                onChange={handleInputChange}
+                                className={errors.senha ? styles.inputError : ''}
+                                placeholder="Senha"
+                            />
+                            <button 
+                                type="button"
+                                className={styles.eyeButton}
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
+                        </div>
+                        {errors.senha && (
+                            <span className={styles.errorMessage}>{errors.senha}</span>
+                        )}
                     </div>
-                </div>
-                <div className={styles.box}>
+
                     <div className={styles.checkboxGroup}>
-                        <input 
-                            type="checkbox" 
-                            id="lembrar" 
-                            name="lembrar"
-                            checked={formData.lembrar}
-                            onChange={handleInputChange}
-                        />
-                        <label htmlFor="lembrar">Lembrar acesso</label>
+                        <label className={styles.checkboxLabel}>
+                            <input
+                                type="checkbox"
+                                name="lembrar"
+                                checked={formData.lembrar}
+                                onChange={handleInputChange}
+                            />
+                            <span className={styles.checkmark}></span>
+                            Lembrar de mim
+                        </label>
                     </div>
-                </div>
-                <div className={styles.buttonContainer}>
-                    <button type="submit" className={styles.criarContaButton}>Entrar</button>
-                </div>
+
+                    <button type="submit" className={styles.submitButton}>
+                        Entrar
+                    </button>
+                </form>
             </div>
-        </form>
+        </div>
     );
 }

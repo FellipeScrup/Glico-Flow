@@ -1,166 +1,211 @@
 .page {
-  background: linear-gradient(180deg, #f0f6ff 0%, #e6f0ff 100%);
+  background: linear-gradient(135deg, #EEF2FF 0%, #E5EEFF 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 80px 24px;
   position: relative;
+  overflow: hidden;
 }
 
 .logoContainer {
   display: flex;
   justify-content: center;
-  padding-top: 80px;
+  margin-bottom: 100px;
+  animation: fadeInDown 0.8s ease;
 }
 
 .logo {
-  width: auto;
+  width: 320px;
   height: auto;
 }
 
 .whiteSection {
-  background: white;
+  background: rgba(255, 255, 255, 0.98);
   width: 100%;
-  padding: 32px 24px;
+  max-width: 420px;
+  padding: 40px 32px;
+  border-radius: 28px;
+  box-shadow: 0 20px 40px rgba(67, 97, 238, 0.1);
+  animation: fadeInUp 0.8s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
-  position: absolute;
-  bottom: 5rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #1a1a1a;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--secondary);
   text-align: center;
-  margin: 0;
+  margin-bottom: 40px;
+  letter-spacing: -0.5px;
 }
 
 .buttonContainer {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  justify-content: center;
+  gap: 16px;
   width: 100%;
-  max-width: 320px;
+  max-width: 360px;
+}
+
+.createAccountButton, .loginButton {
+  width: 160px;
+  padding: 16px 0;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
 }
 
 .createAccountButton {
-  background: transparent;
-  color: #4a90e2;
-  border: 1px solid #4a90e2;
-  padding: 15px;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: 8px;
-  cursor: pointer;
-  width: 100%;
-  text-transform: uppercase;
+  background: #4361EE;
+  color: white;
+  border: none;
+  box-shadow: 0 8px 20px rgba(67, 97, 238, 0.25);
+  animation: pulseButton 2s infinite;
+}
+
+.createAccountButton:hover {
+  background: #3046C9;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(67, 97, 238, 0.3);
+  animation: none;
 }
 
 .loginButton {
-  background: #4a90e2;
-  color: white;
-  border: none;
-  padding: 15px;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: 8px;
-  cursor: pointer;
-  width: 100%;
-  text-transform: uppercase;
+  background: white;
+  color: #4361EE;
+  border: 2px solid #4361EE;
+  transition: all 0.3s ease;
 }
 
-/* Responsividade */
-@media (max-width: 380px) {
-  .logoContainer {
-    padding-top: 60px;
-  }
+.loginButton:hover {
+  background: rgba(67, 97, 238, 0.05);
+  transform: translateY(-2px);
+}
 
-  .title {
-    font-size: 18px;
-  }
+/* Decorative elements */
+.page::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(67, 97, 238, 0.1) 0%, rgba(67, 97, 238, 0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+  animation: float 6s ease-in-out infinite;
+}
 
-  .createAccountButton,
-  .loginButton {
-    padding: 14px;
-    font-size: 13px;
+.page::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  left: -10%;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(0, 180, 216, 0.1) 0%, rgba(0, 180, 216, 0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseButton {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 8px 20px rgba(67, 97, 238, 0.25);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 12px 24px rgba(67, 97, 238, 0.3);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 8px 20px rgba(67, 97, 238, 0.25);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .page {
+    padding: 60px 20px;
+  }
+  
+  .logo {
+    width: 280px;
   }
   
   .whiteSection {
-    padding: 24px 20px;
+    padding: 32px 24px;
   }
-} 
-
-/* Adicione estas regras ao final de cada arquivo .module.css */
-
-@media (max-width: 380px) {
-  .page {
-    padding: 16px 12px;
-    padding-bottom: 80px;
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 32px;
   }
-
-  .firstContainer {
-    margin-bottom: 20px;
-  }
-
-  .firstContainerImg {
-    width: 140px;
-  }
-
-  .container {
-    padding: 0 12px;
-  }
-
-  .inputGroup input,
-  .inputGroup select,
-  .select {
-    padding: 12px;
-    font-size: 16px; /* Evita zoom automático no iOS */
-  }
-
+  
   .buttonContainer {
-    padding: 12px;
+    gap: 12px;
   }
-
-  .continueButton,
-  .criarContaButton,
-  .loginButton {
-    padding: 14px;
+  
+  .createAccountButton, .loginButton {
+    width: 140px;
+    padding: 14px 0;
     font-size: 14px;
   }
-
-  .firstContainerText h1 {
-    font-size: 1.2rem;
-    padding: 0 10px;
-  }
 }
 
-/* Ajustes para telas muito pequenas */
-@media (max-width: 320px) {
-  .page {
-    padding: 12px 8px;
+/* Para telas muito pequenas */
+@media (max-width: 360px) {
+  .buttonContainer {
+    flex-direction: column;
+    align-items: center;
   }
-
-  .firstContainerImg {
-    width: 120px;
-  }
-
-  .inputGroup input,
-  .inputGroup select,
-  .select {
-    padding: 10px;
+  
+  .createAccountButton, .loginButton {
+    width: 200px;
   }
 }
-
-/* Ajustes para altura da tela */
-@media (max-height: 667px) {
-  .logoContainer {
-    padding-top: 40px;
-  }
-
-  .firstContainer {
-    margin-bottom: 16px;
-  }
-} 

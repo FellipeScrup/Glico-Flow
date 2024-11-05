@@ -1,13 +1,14 @@
 'use client'
 import Image from "next/image";
-import styles from "./signup.module.css";
-import Link from "next/link";
-import logo from "@/assets/glicoflow-logo.png";
 import { useState } from "react";
+import styles from "./signup.module.css";
+import logo from "@/assets/glicoflow-logo.png";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useRouter } from "next/navigation";
 
 export default function Signup() {
     const router = useRouter();
+    const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
         senha: '',
@@ -57,73 +58,101 @@ export default function Signup() {
         }
     };
 
-    return(
-        <form onSubmit={handleSubmit} className={styles.page}>
-            <div className={styles.firstContainer}>
-                <div className={styles.firstContainerImg}>
-                    <Image src={logo} alt="GlicoFlow Logo" />
-                </div>
-                <div className={styles.firstContainerText}>
-                    <h1>Por favor, insira seu email e senha para criar uma conta</h1>
-                </div>
+    return (
+        <div className={styles.page}>
+            <div className={styles.logoContainer}>
+                <Image
+                    src={logo}
+                    alt="GlicoFlow Logo"
+                    width={320}
+                    height={320}
+                    priority
+                    className={styles.logo}
+                />
             </div>
-            <div className={styles.container}>
-                <div className={styles.form}>
+
+            <div className={styles.formContainer}>
+                <h1 className={styles.title}>Criar Conta</h1>
+                
+                <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
                         <input 
                             type="email" 
                             id="email" 
                             name="email"
-                            placeholder="Seu email:" 
                             value={formData.email}
                             onChange={handleInputChange}
                             className={errors.email ? styles.inputError : ''}
+                            placeholder="Digite seu email *"
+                            required
                         />
-                        <label htmlFor="email">Seu email:</label>
-                        {errors.email && <span className={styles.errorMessage}>{errors.email}</span>}
+                        {errors.email && (
+                            <span className={styles.errorMessage}>{errors.email}</span>
+                        )}
                     </div>
+
                     <div className={styles.inputGroup}>
-                        <input 
-                            type="password" 
-                            id="senha" 
-                            name="senha"
-                            placeholder="Sua senha:" 
-                            value={formData.senha}
-                            onChange={handleInputChange}
-                            className={errors.senha ? styles.inputError : ''}
-                        />
-                        <label htmlFor="senha">Sua senha:</label>
-                        {errors.senha && <span className={styles.errorMessage}>{errors.senha}</span>}
+                        <div className={styles.passwordWrapper}>
+                            <input 
+                                type={showPassword ? "text" : "password"}
+                                id="senha" 
+                                name="senha"
+                                value={formData.senha}
+                                onChange={handleInputChange}
+                                className={errors.senha ? styles.inputError : ''}
+                                placeholder="Digite sua senha *"
+                                required
+                            />
+                            <button 
+                                type="button"
+                                className={styles.eyeButton}
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
+                            </button>
+                        </div>
+                        {errors.senha && (
+                            <span className={styles.errorMessage}>{errors.senha}</span>
+                        )}
                     </div>
-                </div>
-                <div className={styles.box}>
+
                     <div className={styles.checkboxGroup}>
-                        <input 
-                            type="checkbox" 
-                            id="termos" 
-                            name="termos"
-                            checked={formData.termos}
-                            onChange={handleInputChange}
-                        />
-                        <label htmlFor="termos">Eu li e aceito os <span>termos de privacidade</span></label>
-                        {errors.termos && <span className={styles.errorMessage}>{errors.termos}</span>}
+                        <label className={styles.checkboxLabel}>
+                            <input
+                                type="checkbox"
+                                name="termos"
+                                checked={formData.termos}
+                                onChange={handleInputChange}
+                            />
+                            <span className={styles.checkmark}></span>
+                            <span className={styles.checkboxText}>
+                                Aceito os <a href="#" className={styles.termsLink}>termos de privacidade</a>
+                            </span>
+                        </label>
+                        {errors.termos && (
+                            <span className={styles.errorMessage}>{errors.termos}</span>
+                        )}
                     </div>
+
                     <div className={styles.checkboxGroup}>
-                        <input 
-                            type="checkbox" 
-                            id="newsletter" 
-                            name="newsletter"
-                            checked={formData.newsletter}
-                            onChange={handleInputChange}
-                        />
-                        <label htmlFor="newsletter">Opcional: Desejo receber novidades e promoções por email</label>
+                        <label className={styles.checkboxLabel}>
+                            <input
+                                type="checkbox"
+                                name="newsletter"
+                                checked={formData.newsletter}
+                                onChange={handleInputChange}
+                            />
+                            <span className={styles.checkmark}></span>
+                            <span className={styles.checkboxText}>Receber novidades por email</span>
+                        </label>
                     </div>
-                </div>
-                <div className={styles.buttonContainer}>
-                    <button type="submit" className={styles.criarContaButton}>Criar conta</button>
-                </div>
+
+                    <button type="submit" className={styles.submitButton}>
+                        Criar conta
+                    </button>
+                </form>
             </div>
-        </form>
+        </div>
     );
 }
 

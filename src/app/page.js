@@ -11,8 +11,8 @@ export default function Home() {
         <Image
           src={logo}
           alt="GlicoFlow Logo"
-          width={270}
-          height={250}
+          width={320}
+          height={320}
           priority
           className={styles.logo}
         />
@@ -20,16 +20,18 @@ export default function Home() {
       
       <div className={styles.content}>
         <h1 className={styles.title}>
-          CONTROLE A SUA DIABETE
+          CONTROLE A SUA DIABETES
         </h1>
 
         <div className={styles.welcomeText}>
-          <h2>BEM VINDO AO <span className={styles.highlight}>GlicoFlow!</span></h2>
-          <p>um APP para melhorar sua qualidade de vida</p>
+          <h2>BEM-VINDO AO <span className={styles.highlight}>GlicoFlow</span></h2>
+          <p>Seu parceiro para uma vida mais saudável</p>
         </div>
 
-        <Link href="/login" className={styles.startButton}>
-          COMECE AGORA
+        <Link href="/login">
+          <button className={styles.startButton}>
+            Comece Agora
+          </button>
         </Link>
       </div>
     </div>

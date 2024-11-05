@@ -10,8 +10,8 @@ export default function Login() {
         <Image
           src={logo}
           alt="GlicoFlow Logo"
-          width={270}
-          height={250}
+          width={320}
+          height={320}
           priority
           className={styles.logo}
         />
@@ -19,23 +19,22 @@ export default function Login() {
       
       <div className={styles.whiteSection}>
         <h1 className={styles.title}>
-          CONTROLE A SUA DIABETE
+          CONTROLE SUA DIABETES
         </h1>
 
         <div className={styles.buttonContainer}>
-          <Link href="/signup">
+          <Link href="/signup" style={{ flex: 1 }}>
             <button className={styles.createAccountButton}>
-              CRIAR CONTA
+              Criar Conta
             </button>
           </Link>
-          <Link href="/signin">
+          <Link href="/signin" style={{ flex: 1 }}>
             <button className={styles.loginButton}>
-              ENTRAR
+              Entrar
             </button>
           </Link>
         </div>
       </div>
     </div>
-    
   );
 } 

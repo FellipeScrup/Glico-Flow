@@ -16,6 +16,7 @@ export default function PersonalData() {
         sexo: ''
     });
     const [errors, setErrors] = useState({});
+    const [showSexoOptions, setShowSexoOptions] = useState(false);
 
     const validateFullName = (name) => {
         const names = name.trim().split(' ');
@@ -125,19 +126,31 @@ export default function PersonalData() {
         }
     };
 
+    const handleSexoSelect = (value) => {
+        setFormData(prev => ({
+            ...prev,
+            sexo: value
+        }));
+        setShowSexoOptions(false);
+    };
+
     return (
         <div className={styles.page}>
-            <div className={styles.firstContainer}>
-                <div className={styles.firstContainerImg}>
-                    <Image src={logo} alt="GlicoFlow Logo" width={200} height={180} />
-                </div>
-                <div className={styles.firstContainerText}>
-                    <h1>Complete seu perfil</h1>
-                </div>
+            <div className={styles.logoContainer}>
+                <Image
+                    src={logo}
+                    alt="GlicoFlow Logo"
+                    width={320}
+                    height={320}
+                    priority
+                    className={styles.logo}
+                />
             </div>
 
-            <form onSubmit={handleSubmit} className={styles.container}>
-                <div className={styles.form}>
+            <div className={styles.formContainer}>
+                <h1 className={styles.title}>Complete seu perfil</h1>
+                
+                <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
                         <input 
                             type="text"
@@ -146,41 +159,54 @@ export default function PersonalData() {
                             value={formData.nome}
                             onChange={handleInputChange}
                             className={errors.nome ? styles.inputError : ''}
+                            placeholder="Digite seu nome completo *"
                         />
-                        <label htmlFor="nome">Nome completo</label>
                         {errors.nome && <span className={styles.errorMessage}>{errors.nome}</span>}
                     </div>
 
                     <div className={styles.inputGroup}>
-                        <select
-                            id="sexo"
-                            name="sexo"
-                            value={formData.sexo}
-                            onChange={handleInputChange}
-                            className={`${styles.select} ${errors.sexo ? styles.inputError : ''}`}
+                        <div 
+                            className={`${styles.customSelect} ${errors.sexo ? styles.inputError : ''}`}
+                            onClick={() => setShowSexoOptions(!showSexoOptions)}
                         >
-                            <option value="">Selecione o sexo</option>
-                            <option value="masculino">Masculino</option>
-                            <option value="feminino">Feminino</option>
-                        </select>
-                        <label htmlFor="sexo">Sexo</label>
+                            <span className={formData.sexo ? styles.selected : styles.placeholder}>
+                                {formData.sexo || "Selecione o sexo *"}
+                            </span>
+                        </div>
+                        
+                        {showSexoOptions && (
+                            <div className={styles.optionsContainer}>
+                                <div 
+                                    className={styles.option}
+                                    onClick={() => handleSexoSelect('Masculino')}
+                                >
+                                    Masculino
+                                </div>
+                                <div 
+                                    className={styles.option}
+                                    onClick={() => handleSexoSelect('Feminino')}
+                                >
+                                    Feminino
+                                </div>
+                            </div>
+                        )}
                         {errors.sexo && <span className={styles.errorMessage}>{errors.sexo}</span>}
                     </div>
 
-                    <div className={styles.inputGroup}>
-                        <input 
-                            type="text"
-                            id="idade"
-                            name="idade"
-                            value={formData.idade}
-                            onChange={handleInputChange}
-                            className={errors.idade ? styles.inputError : ''}
-                        />
-                        <label htmlFor="idade">Idade</label>
-                        {errors.idade && <span className={styles.errorMessage}>{errors.idade}</span>}
-                    </div>
-
                     <div className={styles.inputRow}>
+                        <div className={styles.inputGroup}>
+                            <input 
+                                type="text"
+                                id="idade"
+                                name="idade"
+                                value={formData.idade}
+                                onChange={handleInputChange}
+                                className={errors.idade ? styles.inputError : ''}
+                                placeholder="Idade *"
+                            />
+                            {errors.idade && <span className={styles.errorMessage}>{errors.idade}</span>}
+                        </div>
+
                         <div className={styles.inputGroup}>
                             <input 
                                 type="text"
@@ -189,8 +215,8 @@ export default function PersonalData() {
                                 value={formData.peso}
                                 onChange={handleInputChange}
                                 className={errors.peso ? styles.inputError : ''}
+                                placeholder="Peso (kg) *"
                             />
-                            <label htmlFor="peso">Peso (kg)</label>
                             {errors.peso && <span className={styles.errorMessage}>{errors.peso}</span>}
                         </div>
 
@@ -202,19 +228,17 @@ export default function PersonalData() {
                                 value={formData.altura}
                                 onChange={handleInputChange}
                                 className={errors.altura ? styles.inputError : ''}
+                                placeholder="Altura (m) *"
                             />
-                            <label htmlFor="altura">Altura (m)</label>
                             {errors.altura && <span className={styles.errorMessage}>{errors.altura}</span>}
                         </div>
                     </div>
-                </div>
 
-                <div className={styles.buttonContainer}>
-                    <button type="submit" className={styles.continueButton}>
+                    <button type="submit" className={styles.submitButton}>
                         Continuar
                     </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     );
 } 

@@ -1,0 +1,18 @@
+{
+  "name": "GlicoFlow",
+  "short_name": "GlicoFlow",
+  "description": "Controle sua diabetes",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#EEF2FF",
+  "theme_color": "#4361EE",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/glicoflow-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+} 
