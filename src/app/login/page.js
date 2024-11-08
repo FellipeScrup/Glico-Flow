@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./login.module.css";
@@ -21,17 +23,17 @@ export default function Login() {
         <h1 className={styles.title}>
           CONTROLE SUA DIABETES
         </h1>
-          <Link href="/signup" >
-            <button className={styles.createAccountButton}>
-              Criar Conta
-            </button>
-          </Link>
-          <Link href="/signin" >
-            <button className={styles.loginButton}>
-              Entrar
-            </button>
-          </Link>
-        </div>
+        <Link href="/signup">
+          <button className={styles.createAccountButton}>
+            Criar Conta
+          </button>
+        </Link>
+        <Link href="/signin">
+          <button className={styles.loginButton}>
+            Entrar
+          </button>
+        </Link>
       </div>
+    </div>
   );
-} 
+}

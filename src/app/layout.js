@@ -2,33 +2,24 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Metadata } from 'next'
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
 export const metadata = {
   title: "GlicoFlow",
   description: "Controle sua diabetes",
   manifest: "/manifest.json",
-  themeColor: "#4361EE",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: "GlicoFlow",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
+};
+
+export const themeColor = "#4361EE";
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }) {

@@ -2,9 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    appDir: true
-  }
+  images: {
+    domains: ['your-domain.com'], // se necessário
+  },
 };
 
 export default nextConfig;
