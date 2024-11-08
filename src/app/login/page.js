@@ -21,20 +21,17 @@ export default function Login() {
         <h1 className={styles.title}>
           CONTROLE SUA DIABETES
         </h1>
-
-        <div className={styles.buttonContainer}>
-          <Link href="/signup" style={{ flex: 1 }}>
+          <Link href="/signup" >
             <button className={styles.createAccountButton}>
               Criar Conta
             </button>
           </Link>
-          <Link href="/signin" style={{ flex: 1 }}>
+          <Link href="/signin" >
             <button className={styles.loginButton}>
               Entrar
             </button>
           </Link>
         </div>
       </div>
-    </div>
   );
 } 

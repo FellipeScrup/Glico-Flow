@@ -11,8 +11,8 @@ export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
-        senha: '',
-        termos: false,
+        password: '',
+        terms: false,
         newsletter: false
     });
     const [errors, setErrors] = useState({});
@@ -30,34 +30,60 @@ export default function Signup() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const newErrors = {};
-
+    
+        // Basic validation
         if (!formData.email) {
-            newErrors.email = 'Email é obrigatório';
+            newErrors.email = 'Email is required';
         } else if (!validateEmail(formData.email)) {
-            newErrors.email = 'Email inválido';
+            newErrors.email = 'Invalid email';
         }
-
-        if (!formData.senha) {
-            newErrors.senha = 'Senha é obrigatória';
+    
+        if (!formData.password) {
+            newErrors.password = 'Password is required';
         }
-
-        if (!formData.termos) {
-            newErrors.termos = 'Você precisa aceitar os termos';
+    
+        if (!formData.terms) {
+            newErrors.terms = 'You must accept the terms';
         }
-
+    
         setErrors(newErrors);
-
+    
         if (Object.keys(newErrors).length === 0) {
-            // Aqui você pode adicionar a lógica de cadastro
-            console.log('Formulário válido', formData);
-            // Redireciona para a página de dados pessoais
-            router.push('/personal-data');
+            try {
+                const response = await fetch('http://localhost:5000/api/users/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: formData.email,
+                        password: formData.password,
+                        termsAccepted: formData.terms,
+                        newsletter: formData.newsletter || false
+                    }),
+                });
+    
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to sign up');
+                }
+    
+                const data = await response.json();
+                localStorage.setItem('token', data.token); // Store the token
+                localStorage.setItem('userId', data.user._id);
+                console.log('User created successfully:', data);
+                // Redirect to the personal data page
+                router.push('/personal-data');
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     };
-
+    
+    
     return (
         <div className={styles.page}>
             <div className={styles.logoContainer}>
@@ -72,7 +98,7 @@ export default function Signup() {
             </div>
 
             <div className={styles.formContainer}>
-                <h1 className={styles.title}>Criar Conta</h1>
+                <h1 className={styles.title}>Create Account</h1>
                 
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
@@ -83,7 +109,7 @@ export default function Signup() {
                             value={formData.email}
                             onChange={handleInputChange}
                             className={errors.email ? styles.inputError : ''}
-                            placeholder="Digite seu email *"
+                            placeholder="Enter your email *"
                             required
                         />
                         {errors.email && (
@@ -95,12 +121,12 @@ export default function Signup() {
                         <div className={styles.passwordWrapper}>
                             <input 
                                 type={showPassword ? "text" : "password"}
-                                id="senha" 
-                                name="senha"
-                                value={formData.senha}
+                                id="password" 
+                                name="password"
+                                value={formData.password}
                                 onChange={handleInputChange}
-                                className={errors.senha ? styles.inputError : ''}
-                                placeholder="Digite sua senha *"
+                                className={errors.password ? styles.inputError : ''}
+                                placeholder="Enter your password *"
                                 required
                             />
                             <button 
@@ -111,8 +137,8 @@ export default function Signup() {
                                 {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
                             </button>
                         </div>
-                        {errors.senha && (
-                            <span className={styles.errorMessage}>{errors.senha}</span>
+                        {errors.password && (
+                            <span className={styles.errorMessage}>{errors.password}</span>
                         )}
                     </div>
 
@@ -120,17 +146,17 @@ export default function Signup() {
                         <label className={styles.checkboxLabel}>
                             <input
                                 type="checkbox"
-                                name="termos"
-                                checked={formData.termos}
+                                name="terms"
+                                checked={formData.terms}
                                 onChange={handleInputChange}
                             />
                             <span className={styles.checkmark}></span>
                             <span className={styles.checkboxText}>
-                                Aceito os <a href="#" className={styles.termsLink}>termos de privacidade</a>
+                                I accept the <a href="#" className={styles.termsLink}>terms of privacy</a>
                             </span>
                         </label>
-                        {errors.termos && (
-                            <span className={styles.errorMessage}>{errors.termos}</span>
+                        {errors.terms && (
+                            <span className={styles.errorMessage}>{errors.terms}</span>
                         )}
                     </div>
 
@@ -143,12 +169,12 @@ export default function Signup() {
                                 onChange={handleInputChange}
                             />
                             <span className={styles.checkmark}></span>
-                            <span className={styles.checkboxText}>Receber novidades por email</span>
+                            <span className={styles.checkboxText}>Receive news updates by email</span>
                         </label>
                     </div>
 
                     <button type="submit" className={styles.submitButton}>
-                        Criar conta
+                        Create Account
                     </button>
                 </form>
             </div>

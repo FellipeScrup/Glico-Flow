@@ -8,8 +8,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 export default function SignIn() {
     const [formData, setFormData] = useState({
         email: '',
-        senha: '',
-        lembrar: false
+        password: '',
+        remember: false
     });
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
@@ -35,15 +35,15 @@ export default function SignIn() {
         const newErrors = {};
 
         if (!formData.email) {
-            newErrors.email = 'Email é obrigatório';
+            newErrors.email = 'Email is required';
         } else if (!validateEmail(formData.email)) {
-            newErrors.email = 'Email inválido';
+            newErrors.email = 'Invalid email';
         }
 
-        if (!formData.senha) {
-            newErrors.senha = 'Senha é obrigatória';
-        } else if (formData.senha.length < 6) {
-            newErrors.senha = 'Senha deve ter no mínimo 6 caracteres';
+        if (!formData.password) {
+            newErrors.password = 'Password is required';
+        } else if (formData.password.length < 6) {
+            newErrors.password = 'Password must be at least 6 characters';
         }
 
         if (Object.keys(newErrors).length > 0) {
@@ -69,7 +69,7 @@ export default function SignIn() {
             </div>
 
             <div className={styles.formContainer}>
-                <h1 className={styles.title}>Entrar</h1>
+                <h1 className={styles.title}>Sign In</h1>
                 
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
@@ -91,12 +91,12 @@ export default function SignIn() {
                         <div className={styles.passwordWrapper}>
                             <input 
                                 type={showPassword ? "text" : "password"}
-                                id="senha" 
-                                name="senha"
-                                value={formData.senha}
+                                id="password" 
+                                name="password"
+                                value={formData.password}
                                 onChange={handleInputChange}
-                                className={errors.senha ? styles.inputError : ''}
-                                placeholder="Senha"
+                                className={errors.password ? styles.inputError : ''}
+                                placeholder="Password"
                             />
                             <button 
                                 type="button"
@@ -106,8 +106,8 @@ export default function SignIn() {
                                 {showPassword ? <FaEyeSlash /> : <FaEye />}
                             </button>
                         </div>
-                        {errors.senha && (
-                            <span className={styles.errorMessage}>{errors.senha}</span>
+                        {errors.password && (
+                            <span className={styles.errorMessage}>{errors.password}</span>
                         )}
                     </div>
 
@@ -115,17 +115,17 @@ export default function SignIn() {
                         <label className={styles.checkboxLabel}>
                             <input
                                 type="checkbox"
-                                name="lembrar"
-                                checked={formData.lembrar}
+                                name="remember"
+                                checked={formData.remember}
                                 onChange={handleInputChange}
                             />
                             <span className={styles.checkmark}></span>
-                            Lembrar de mim
+                            Remember me
                         </label>
                     </div>
 
                     <button type="submit" className={styles.submitButton}>
-                        Entrar
+                        Sign In
                     </button>
                 </form>
             </div>

@@ -1,9 +1,9 @@
-'use client'
+'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from "next/image";
-import styles from "./diabetes-type.module.css";
-import logo from "@/assets/glicoflow-logo.png";
+import Image from 'next/image';
+import styles from './diabetes-type.module.css';
+import logo from '@/assets/glicoflow-logo.png';
 
 export default function DiabetesType() {
     const router = useRouter();
@@ -15,26 +15,62 @@ export default function DiabetesType() {
     const [error, setError] = useState('');
 
     const diabetesTypes = [
-        { id: 'tipo1', label: 'TIPO 1' },
-        { id: 'tipo2', label: 'TIPO 2' },
-        { id: 'pre', label: 'PRÉ DIABETES' },
-        { id: 'gestacional', label: 'GESTACIONAL' }
+        { id: 'type1', label: 'TYPE 1' },
+        { id: 'type2', label: 'TYPE 2' },
+        { id: 'pre', label: 'PRE DIABETES' },
+        { id: 'gestational', label: 'GESTATIONAL' },
     ];
 
     const treatmentTypes = [
-        { id: 'caneta_seringa', label: 'CANETA / SERINGAS' },
-        { id: 'bomba', label: 'BOMBA' },
-        { id: 'sem_insulina', label: 'SEM INSULINA' }
+        { id: 'pen_syringe', label: 'PEN / SYRINGES' },
+        { id: 'pump', label: 'PUMP' },
+        { id: 'no_insulin', label: 'NO INSULIN' },
     ];
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!selectedType || !selectedTreatment || !medication || !glycemiaUnit || !carbUnit) {
-            setError('Por favor, preencha todos os campos');
-            return;
+// In diabetes-type.js
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!selectedType || !selectedTreatment || !medication || !glycemiaUnit || !carbUnit) {
+        setError('Por favor, preencha todos os campos');
+        return;
+    }
+
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('No token found, user is not authorized');
         }
+
+        const response = await fetch('http://localhost:5000/api/users/update', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, // Include the token
+            },
+            body: JSON.stringify({
+                diabetesType: selectedType,
+                treatmentMethod: selectedTreatment,
+                medication,
+                glycemiaUnit,
+                carbUnit,
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to update user data');
+        }
+
+        const data = await response.json();
+        console.log('User data updated:', data);
+
+        // Redirect to the next screen
         router.push('/glycemia-ranges');
-    };
+    } catch (error) {
+        console.error('Error:', error);
+        setError(error.message);
+    }
+};
 
     return (
         <div className={styles.page}>
@@ -62,7 +98,9 @@ export default function DiabetesType() {
                             onChange={(e) => setSelectedType(e.target.value)}
                             className={styles.select}
                         >
-                            <option value="" disabled>Selecione o tipo de diabetes</option>
+                            <option value="" disabled>
+                                Selecione o tipo de diabetes
+                            </option>
                             {diabetesTypes.map((type) => (
                                 <option key={type.id} value={type.id}>
                                     {type.label}
@@ -83,7 +121,9 @@ export default function DiabetesType() {
                                 onChange={(e) => setSelectedTreatment(e.target.value)}
                                 className={styles.select}
                             >
-                                <option value="" disabled>Selecione o método de tratamento</option>
+                                <option value="" disabled>
+                                    Selecione o método de tratamento
+                                </option>
                                 {treatmentTypes.map((type) => (
                                     <option key={type.id} value={type.id}>
                                         {type.label}
@@ -96,18 +136,20 @@ export default function DiabetesType() {
                     {/* Terceiro: Medicamentos */}
                     {selectedTreatment && (
                         <div className={styles.medicationGroup}>
-                            <label className={styles.label}>
-                                Você toma algum medicamento?
-                            </label>
+                            <label className={styles.label}>Você toma algum medicamento?</label>
                             <div className={styles.radioGroup}>
-                                <div 
-                                    className={`${styles.radioOption} ${medication === 'sim' ? styles.selected : ''}`}
+                                <div
+                                    className={`${styles.radioOption} ${
+                                        medication === 'sim' ? styles.selected : ''
+                                    }`}
                                     onClick={() => setMedication('sim')}
                                 >
                                     <label>SIM</label>
                                 </div>
-                                <div 
-                                    className={`${styles.radioOption} ${medication === 'nao' ? styles.selected : ''}`}
+                                <div
+                                    className={`${styles.radioOption} ${
+                                        medication === 'nao' ? styles.selected : ''
+                                    }`}
                                     onClick={() => setMedication('nao')}
                                 >
                                     <label>NÃO</label>
@@ -122,14 +164,18 @@ export default function DiabetesType() {
                             <div className={styles.unitSection}>
                                 <label className={styles.label}>GLICEMIA</label>
                                 <div className={styles.radioGroup}>
-                                    <div 
-                                        className={`${styles.radioOption} ${glycemiaUnit === 'mg/dL' ? styles.selected : ''}`}
+                                    <div
+                                        className={`${styles.radioOption} ${
+                                            glycemiaUnit === 'mg/dL' ? styles.selected : ''
+                                        }`}
                                         onClick={() => setGlycemiaUnit('mg/dL')}
                                     >
                                         <label>mg/dL</label>
                                     </div>
-                                    <div 
-                                        className={`${styles.radioOption} ${glycemiaUnit === 'mmol/L' ? styles.selected : ''}`}
+                                    <div
+                                        className={`${styles.radioOption} ${
+                                            glycemiaUnit === 'mmol/L' ? styles.selected : ''
+                                        }`}
                                         onClick={() => setGlycemiaUnit('mmol/L')}
                                     >
                                         <label>mmol/L</label>
@@ -140,14 +186,18 @@ export default function DiabetesType() {
                             <div className={styles.unitSection}>
                                 <label className={styles.label}>CARBOIDRATOS</label>
                                 <div className={styles.radioGroup}>
-                                    <div 
-                                        className={`${styles.radioOption} ${carbUnit === 'g' ? styles.selected : ''}`}
+                                    <div
+                                        className={`${styles.radioOption} ${
+                                            carbUnit === 'g' ? styles.selected : ''
+                                        }`}
                                         onClick={() => setCarbUnit('g')}
                                     >
                                         <label>g</label>
                                     </div>
-                                    <div 
-                                        className={`${styles.radioOption} ${carbUnit === 'ex' ? styles.selected : ''}`}
+                                    <div
+                                        className={`${styles.radioOption} ${
+                                            carbUnit === 'ex' ? styles.selected : ''
+                                        }`}
                                         onClick={() => setCarbUnit('ex')}
                                     >
                                         <label>ex</label>
@@ -168,4 +218,4 @@ export default function DiabetesType() {
             </form>
         </div>
     );
-} 
+}

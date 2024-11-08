@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
@@ -11,6 +11,7 @@ export default function MeterType() {
     const [selectedSensor, setSelectedSensor] = useState('');
     const [customMeter, setCustomMeter] = useState('');
     const [customSensor, setCustomSensor] = useState('');
+    const [error, setError] = useState('');
 
     const meters = [
         'Accu-Chek Guide',
@@ -33,9 +34,49 @@ export default function MeterType() {
         'Não uso nenhum'
     ];
 
-    const handleSubmit = () => {
-        if (selectedMeter && selectedSensor) {
-            router.push('/dashboard');
+    const handleSubmit = async () => {
+        if (
+            selectedMeter && 
+            selectedSensor && 
+            (selectedMeter !== 'Outro dispositivo' || customMeter) &&
+            (selectedSensor !== 'Outro sensor' || customSensor)
+        ) {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No token found, user is not authorized');
+                }
+
+                const response = await fetch('http://localhost:5000/api/users/update', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        meterType: selectedMeter,
+                        customMeter: selectedMeter === 'Outro dispositivo' ? customMeter : '',
+                        sensorType: selectedSensor,
+                        customSensor: selectedSensor === 'Outro sensor' ? customSensor : ''
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to update user data');
+                }
+
+                const data = await response.json();
+                console.log('User data updated:', data);
+
+                // Redirect to the dashboard or next screen
+                router.push('/dashboard');
+            } catch (error) {
+                console.error('Error:', error);
+                setError(error.message);
+            }
+        } else {
+            setError('Por favor, preencha todos os campos obrigatórios');
         }
     };
 
@@ -46,12 +87,17 @@ export default function MeterType() {
             </div>
 
             <div className={styles.container}>
+                {error && <div className={styles.errorMessage}>{error}</div>}
+
                 <div className={styles.section}>
                     <h2 className={styles.sectionTitle}>Qual o seu tipo de medidor?</h2>
                     <div className={styles.selectContainer}>
                         <select
                             value={selectedMeter}
-                            onChange={(e) => setSelectedMeter(e.target.value)}
+                            onChange={(e) => {
+                                setSelectedMeter(e.target.value);
+                                setCustomMeter('');
+                            }}
                             className={styles.select}
                             required
                         >
@@ -77,11 +123,14 @@ export default function MeterType() {
                 </div>
 
                 <div className={styles.section}>
-                    <h2 className={styles.sectionTitle}>Você usa sensor Glucose?</h2>
+                    <h2 className={styles.sectionTitle}>Você usa sensor de glicose?</h2>
                     <div className={styles.selectContainer}>
                         <select
                             value={selectedSensor}
-                            onChange={(e) => setSelectedSensor(e.target.value)}
+                            onChange={(e) => {
+                                setSelectedSensor(e.target.value);
+                                setCustomSensor('');
+                            }}
                             className={styles.select}
                             required
                         >
@@ -121,4 +170,4 @@ export default function MeterType() {
             </div>
         </div>
     );
-} 
+}

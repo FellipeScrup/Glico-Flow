@@ -66,19 +66,51 @@ export default function GlycemiaRanges() {
         }
     };
 
-    const handleSubmit = () => {
-        const numValue = Number(value);
-        
-        // Validação final antes de submeter
-        if (!value || numValue < MIN_GLUCOSE || numValue > MAX_GLUCOSE) {
-            setError('Por favor, insira um valor válido');
-            return;
-        }
+// GlycemiaRanges component
+const handleSubmit = async () => {
+    const numValue = Number(value);
 
-        if (currentRange) {
+    // Final validation before submitting
+    if (!value || numValue < MIN_GLUCOSE || numValue > MAX_GLUCOSE) {
+        setError('Por favor, insira um valor válido');
+        return;
+    }
+
+    if (currentRange) {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('No token found, user is not authorized');
+            }
+
+            const response = await fetch('http://localhost:5000/api/users/update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // Include the token
+                },
+                body: JSON.stringify({
+                    glycemiaValue: numValue,
+                    glycemiaRecordedAt: new Date()
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to update glycemia value');
+            }
+
+            const data = await response.json();
+            console.log('Glycemia value updated:', data);
+
+            // Redirect to the next screen
             router.push('/meter-type');
+        } catch (error) {
+            console.error('Error:', error);
+            setError(error.message);
         }
-    };
+    }
+};
 
     return (
         <div className={styles.page}>
