@@ -1,0 +1,8 @@
+# Ignorar todos os arquivos JSON
+*.json
+
+# Ignorar o arquivo .env
+.env
+
+# Ignorar a pasta node_modules
+node_modules/ 
