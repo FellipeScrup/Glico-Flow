@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { Metadata } from 'next'
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 export const metadata = {
   title: "GlicoFlow",
@@ -39,7 +40,11 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" href="/glicoflow-logo.png" />
         <link rel="icon" type="image/png" href="/glicoflow-logo.png" />
       </head>
-      <body>{children}</body>
+      <body>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

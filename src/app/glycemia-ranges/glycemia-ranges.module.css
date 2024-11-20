@@ -122,33 +122,103 @@
 }
 
 .continueButton {
-    margin-top: 16px;
+    width: 100%;
+    padding: 16px;
     background: #4361EE;
     color: white;
-    padding: 14px;
-    width: 100%;
     border: none;
-    border-radius: 16px;
+    border-radius: 12px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    margin-top: 24px;
 }
 
 .continueButton:hover {
+    background: #3651D4;
     transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(67, 97, 238, 0.3);
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+}
+
+.continueButton:active {
+    transform: translateY(0);
 }
 
 .errorMessage {
-    color: #FF4B4B;
-    font-size: 12px;
+    font-size: 13px;
+    margin: 8px 0;
+    padding: 12px;
+    border-radius: 12px;
     text-align: center;
-    display: block;
-    margin-top: 8px;
-    animation: slideIn 0.3s ease;
+    font-weight: 600;
+    white-space: pre-line;
+    line-height: 1.3;
+}
+
+.criticalHigh {
+    background-color: #FFE5E5;
+    color: #DC2626;
+    border: 2px solid #DC2626;
+}
+
+.criticalLow {
+    background: linear-gradient(135deg, #FFF4E5 0%, #FFE5CC 100%);
+    color: #D97706;
+    border: 2px solid #D97706;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
+    animation: alertPulse 2s infinite;
+}
+
+.criticalLow ul {
+    margin: 8px 0;
+    padding-left: 20px;
+}
+
+.criticalLow li {
+    margin: 4px 0;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.02);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Estilo para o botão quando há um alerta crítico */
+.criticalHigh button, .criticalLow button {
+    margin-top: 16px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.criticalHigh button {
+    background-color: #DC2626;
+    color: white;
+    border: none;
+}
+
+.criticalLow button {
+    background-color: #D97706;
+    color: white;
+    border: none;
+}
+
+.criticalHigh button:hover, .criticalLow button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .rangeControls {
@@ -456,4 +526,145 @@
     text-align: center;
     margin-bottom: 16px;
     animation: fadeIn 0.3s ease;
+}
+
+.selectGroup {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.selectGroup label {
+    display: block;
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 16px;
+    color: #374151;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.select:focus {
+    border-color: #4361EE;
+    outline: none;
+}
+
+@keyframes alertPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 6px 16px rgba(217, 119, 6, 0.25);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
+    }
+}
+
+@keyframes slideInAndPulse {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alertCard {
+    background: #FFF;
+    border-radius: 16px;
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: 0 4px 20px rgba(255, 86, 86, 0.15);
+    border: 2px solid #FF5656;
+    animation: slideIn 0.3s ease-out;
+}
+
+.alertTitle {
+    color: #FF5656;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.optionsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 12px 0;
+}
+
+.optionPill {
+    background: #FFE5E5;
+    color: #FF5656;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.actionText {
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 12px;
+    font-weight: 500;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Adicione um efeito de hover nas pills */
+.optionPill {
+    transition: all 0.2s ease;
+}
+
+.optionPill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(255, 86, 86, 0.2);
+}
+
+/* Adicione uma animação suave no card */
+.alertCard {
+    transition: all 0.3s ease;
+}
+
+.alertCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(255, 86, 86, 0.2);
 } 

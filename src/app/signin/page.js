@@ -4,8 +4,12 @@ import { useState } from "react";
 import styles from "./signin.module.css";
 import logo from "@/assets/glicoflow-logo.png";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
+import withoutAuth from '../Utils/withoutAuth';
 
-export default function SignIn() {
+
+function SignIn() {
+    const router = useRouter();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -13,6 +17,8 @@ export default function SignIn() {
     });
     const [errors, setErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [loginError, setLoginError] = useState('');
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,20 +36,20 @@ export default function SignIn() {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const newErrors = {};
 
         if (!formData.email) {
-            newErrors.email = 'Email is required';
+            newErrors.email = 'Email é obrigatório';
         } else if (!validateEmail(formData.email)) {
-            newErrors.email = 'Invalid email';
+            newErrors.email = 'Email inválido';
         }
 
         if (!formData.password) {
-            newErrors.password = 'Password is required';
+            newErrors.password = 'Senha é obrigatória';
         } else if (formData.password.length < 6) {
-            newErrors.password = 'Password must be at least 6 characters';
+            newErrors.password = 'Senha deve ter pelo menos 6 caracteres';
         }
 
         if (Object.keys(newErrors).length > 0) {
@@ -51,8 +57,46 @@ export default function SignIn() {
             return;
         }
 
-        // Aqui vai a lógica de submissão do formulário
-        console.log('Form submitted:', formData);
+        setIsLoading(true);
+        setLoginError('');
+
+        try {
+            const response = await fetch('http://localhost:5000/api/users/signin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Falha ao fazer login');
+            }
+
+            // Salvar o token no localStorage
+            localStorage.setItem('token', data.token);
+
+            // Se "lembrar-me" estiver marcado, podemos salvar o email
+            if (formData.remember) {
+                localStorage.setItem('rememberedEmail', formData.email);
+            } else {
+                localStorage.removeItem('rememberedEmail');
+            }
+
+            // Redirecionar para o dashboard
+            router.push('/dashboard');
+
+        } catch (error) {
+            console.error('Erro no login:', error);
+            setLoginError(error.message || 'Falha ao fazer login. Tente novamente.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -69,7 +113,7 @@ export default function SignIn() {
             </div>
 
             <div className={styles.formContainer}>
-                <h1 className={styles.title}>Sign In</h1>
+                <h1 className={styles.title}>Entrar</h1>
                 
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
@@ -96,7 +140,7 @@ export default function SignIn() {
                                 value={formData.password}
                                 onChange={handleInputChange}
                                 className={errors.password ? styles.inputError : ''}
-                                placeholder="Password"
+                                placeholder="Senha"
                             />
                             <button 
                                 type="button"
@@ -120,15 +164,27 @@ export default function SignIn() {
                                 onChange={handleInputChange}
                             />
                             <span className={styles.checkmark}></span>
-                            Remember me
+                            Lembrar-me
                         </label>
                     </div>
 
-                    <button type="submit" className={styles.submitButton}>
-                        Sign In
+                    <button 
+                        type="submit" 
+                        className={styles.submitButton}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Entrando...' : 'Entrar'}
                     </button>
                 </form>
             </div>
+
+            {loginError && (
+                <div className={styles.errorAlert}>
+                    {loginError}
+                </div>
+            )}
         </div>
     );
 }
+
+export default withoutAuth(SignIn);

@@ -100,7 +100,10 @@
 }
 
 .checkboxGroup {
-    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
 }
 
 .checkboxLabel {
@@ -108,12 +111,42 @@
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    user-select: none;
+}
+
+.checkboxLabel input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #D1D5DB;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    background: white;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.checkboxLabel input[type="checkbox"]:checked {
+    background: #4361EE;
+    border-color: #4361EE;
+}
+
+.checkboxLabel input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
 }
 
 .checkboxText {
-    color: #000000;
     font-size: 14px;
+    color: var(--text-primary);
 }
 
 .termsLink {
@@ -123,47 +156,6 @@
 
 .termsLink:hover {
     text-decoration: underline;
-}
-
-.checkboxLabel input[type="checkbox"] {
-    position: absolute;
-    opacity: 0;
-}
-
-.checkmark {
-    height: 16px;
-    width: 16px;
-    background-color: var(--gray-100);
-    border: 2px solid var(--gray-300);
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-}
-
-.checkboxLabel:hover input ~ .checkmark {
-    background-color: var(--gray-200);
-}
-
-.checkboxLabel input:checked ~ .checkmark {
-    background-color: var(--primary);
-    border-color: var(--primary);
-}
-
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-    left: 6px;
-    top: 2px;
-    width: 4px;
-    height: 8px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
-
-.checkboxLabel input:checked ~ .checkmark:after {
-    display: block;
 }
 
 .passwordWrapper {

@@ -29,12 +29,80 @@ export default function PersonalData() {
         }
     }, [router]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('userData', JSON.stringify(formData));
+
+        // Validação dos campos
+        const validationErrors = {};
+        if (!formData.name) validationErrors.name = 'Nome é obrigatório';
+        if (!formData.gender) validationErrors.gender = 'Gênero é obrigatório';
+        if (!formData.age) validationErrors.age = 'Idade é obrigatória';
+        if (!formData.weight) validationErrors.weight = 'Peso é obrigatório';
+        if (!formData.height) validationErrors.height = 'Altura é obrigatória';
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
         }
-        // ... resto da lógica
+
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('Usuário não autenticado');
+            }
+
+            const response = await fetch('http://localhost:5000/api/users/update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Falha ao atualizar dados do usuário');
+            }
+
+            // Opcional: você pode salvar os dados atualizados no localStorage
+            localStorage.setItem('userData', JSON.stringify(data.user));
+
+            // Redireciona para a próxima página
+            router.push('/diabetes-type');
+        } catch (error) {
+            console.error('Erro ao atualizar dados do usuário:', error);
+            setErrors({ form: error.message });
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+        if (errors[name]) {
+            setErrors(prev => ({
+                ...prev,
+                [name]: ''
+            }));
+        }
+    };
+
+    const handleGenderSelect = (gender) => {
+        setFormData(prev => ({
+            ...prev,
+            gender
+        }));
+        setShowGenderOptions(false);
+        if (errors.gender) {
+            setErrors(prev => ({
+                ...prev,
+                gender: ''
+            }));
+        }
     };
 
     if (!isClient) {
@@ -53,9 +121,9 @@ export default function PersonalData() {
                     className={styles.logo}
                 />
             </div>
-
+            {errors.form && <span className={styles.errorMessage}>{errors.form}</span>}
             <div className={styles.formContainer}>
-                <h1 className={styles.title}>Complete your profile</h1>
+                <h1 className={styles.title}>Complete seu perfil</h1>
                 
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
@@ -66,7 +134,7 @@ export default function PersonalData() {
                             value={formData.name}
                             onChange={handleInputChange}
                             className={errors.name ? styles.inputError : ''}
-                            placeholder="Enter your full name *"
+                            placeholder="Digite seu nome completo *"
                         />
                         {errors.name && <span className={styles.errorMessage}>{errors.name}</span>}
                     </div>
@@ -77,7 +145,7 @@ export default function PersonalData() {
                             onClick={() => setShowGenderOptions(!showGenderOptions)}
                         >
                             <span className={formData.gender ? styles.selected : styles.placeholder}>
-                                {formData.gender || "Select gender *"}
+                                {formData.gender || "Selecione o gênero *"}
                             </span>
                         </div>
                         
@@ -87,13 +155,19 @@ export default function PersonalData() {
                                     className={styles.option}
                                     onClick={() => handleGenderSelect('Male')}
                                 >
-                                    Male
+                                    Masculino
                                 </div>
                                 <div 
                                     className={styles.option}
                                     onClick={() => handleGenderSelect('Female')}
                                 >
-                                    Female
+                                    Feminino
+                                </div>
+                                <div 
+                                    className={styles.option}
+                                    onClick={() => handleGenderSelect('Other')}
+                                >
+                                    Outro
                                 </div>
                             </div>
                         )}
@@ -103,49 +177,51 @@ export default function PersonalData() {
                     <div className={styles.inputRow}>
                         <div className={styles.inputGroup}>
                             <input 
-                                type="text"
+                                type="number"
                                 id="age"
                                 name="age"
                                 value={formData.age}
                                 onChange={handleInputChange}
                                 className={errors.age ? styles.inputError : ''}
-                                placeholder="Age *"
+                                placeholder="Idade *"
                             />
                             {errors.age && <span className={styles.errorMessage}>{errors.age}</span>}
                         </div>
 
                         <div className={styles.inputGroup}>
                             <input 
-                                type="text"
+                                type="number"
                                 id="weight"
                                 name="weight"
                                 value={formData.weight}
                                 onChange={handleInputChange}
                                 className={errors.weight ? styles.inputError : ''}
-                                placeholder="Weight (kg) *"
+                                placeholder="Peso (kg) *"
                             />
                             {errors.weight && <span className={styles.errorMessage}>{errors.weight}</span>}
                         </div>
 
                         <div className={styles.inputGroup}>
                             <input 
-                                type="text"
+                                type="number"
                                 id="height"
                                 name="height"
                                 value={formData.height}
                                 onChange={handleInputChange}
                                 className={errors.height ? styles.inputError : ''}
-                                placeholder="Height (m) *"
+                                placeholder="Altura (cm) *"
                             />
                             {errors.height && <span className={styles.errorMessage}>{errors.height}</span>}
                         </div>
                     </div>
 
+                    {errors.form && <span className={styles.errorMessage}>{errors.form}</span>}
+
                     <button type="submit" className={styles.submitButton}>
-                        Continue
+                        Continuar
                     </button>
                 </form>
             </div>
         </div>
     );
-} 
+}

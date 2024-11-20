@@ -1,176 +1,224 @@
-'use client'
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+// glycemia-ranges.js
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./glycemia-ranges.module.css";
 import logo from "@/assets/glicoflow-logo.png";
 
 export default function GlycemiaRanges() {
-    const router = useRouter();
-    const [value, setValue] = useState('');
-    const [currentRange, setCurrentRange] = useState(null);
-    const [error, setError] = useState('');
+  const router = useRouter();
+  const [value, setValue] = useState("");
+  const [currentRange, setCurrentRange] = useState(null);
+  const [error, setError] = useState("");
+  const [mealType, setMealType] = useState("");
+  const [measurementTime, setMeasurementTime] = useState("");
 
-    // Constantes para validação
-    const MIN_GLUCOSE = 20;  // Valor mínimo aceitável
-    const MAX_GLUCOSE = 600; // Valor máximo aceitável
+  // Constantes para validação
+  const MIN_GLUCOSE = 20; // Valor mínimo aceitável
+  const MAX_GLUCOSE = 600; // Valor máximo aceitável
 
-    const handleValueChange = (e) => {
-        const newValue = e.target.value;
-        
-        // Permite apenas números e backspace
-        if (!/^\d*$/.test(newValue)) {
-            return;
-        }
+  const mealTypes = [
+    { id: "breakfast", label: "Café da Manhã" },
+    { id: "lunch", label: "Almoço" },
+    { id: "snack", label: "Café da Tarde" },
+    { id: "dinner", label: "Jantar" },
+  ];
 
-        // Limita o comprimento a 3 dígitos
-        if (newValue.length > 3) {
-            return;
-        }
+  const measurementTimes = [
+    { id: "before", label: "1h Antes da Refeição" },
+    { id: "after", label: "1h Após a Refeição" },
+    { id: "fasting", label: "Jejum" },
+    { id: "bedtime", label: "Antes de Dormir" },
+  ];
 
-        setValue(newValue);
-        
-        // Limpa erro anterior
-        setError('');
+  const handleValueChange = (e) => {
+    const newValue = e.target.value;
 
-        // Se o campo estiver vazio, limpa a faixa
-        if (!newValue) {
-            setCurrentRange(null);
-            return;
-        }
+    if (!/^\d*$/.test(newValue)) {
+      return;
+    }
 
-        const numValue = Number(newValue);
+    setValue(newValue);
+    setError("");
 
-        // Valida o range
-        if (numValue < MIN_GLUCOSE) {
-            setError(`Valor muito baixo. Mínimo: ${MIN_GLUCOSE} mg/dL`);
-            setCurrentRange(null);
-            return;
-        }
+    if (!newValue) {
+      setCurrentRange(null);
+      return;
+    }
 
-        if (numValue > MAX_GLUCOSE) {
-            setError(`Valor muito alto. Máximo: ${MAX_GLUCOSE} mg/dL`);
-            setCurrentRange(null);
-            return;
-        }
+    const numValue = Number(newValue);
 
-        // Determina a faixa
-        if (numValue >= 180) {
-            setCurrentRange('hyper');
-        } else if (numValue >= 70 && numValue <= 179) {
-            setCurrentRange('normal');
-        } else if (numValue < 70) {
-            setCurrentRange('hypo');
-        } else {
-            setCurrentRange(null);
-        }
-    };
+    if (numValue >= 400) {
+      setError(
+        "ATENÇÃO! Glicemia muito elevada! Procure atendimento médico imediatamente!"
+      );
+      setCurrentRange("critical-high");
+    } else if (numValue < 70) {
+      setError(`ATENÇÃO! Glicemia Baixa!
 
-// GlycemiaRanges component
-const handleSubmit = async () => {
+Opções Rápidas:
+• Suco de laranja/uva
+• Mel ou açúcar
+• Balas de glicose
+
+Meça novamente em 15min`);
+      setCurrentRange("critical-low");
+    }
+    // Define os ranges normais
+    if (numValue >= 180) {
+      setCurrentRange("hyper");
+    } else if (numValue >= 70 && numValue <= 179) {
+      setCurrentRange("normal");
+    } else if (numValue < 70) {
+      setCurrentRange("hypo");
+    }
+  };
+
+  const handleSubmit = async () => {
     const numValue = Number(value);
 
-    // Final validation before submitting
-    if (!value || numValue < MIN_GLUCOSE || numValue > MAX_GLUCOSE) {
-        setError('Por favor, insira um valor válido');
-        return;
+    if (!value) {
+      setError("Por favor, insira um valor");
+      return;
     }
 
-    if (currentRange) {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                throw new Error('No token found, user is not authorized');
-            }
-
-            const response = await fetch('http://localhost:5000/api/users/update', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}` // Include the token
-                },
-                body: JSON.stringify({
-                    glycemiaValue: numValue,
-                    glycemiaRecordedAt: new Date()
-                }),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Failed to update glycemia value');
-            }
-
-            const data = await response.json();
-            console.log('Glycemia value updated:', data);
-
-            // Redirect to the next screen
-            router.push('/meter-type');
-        } catch (error) {
-            console.error('Error:', error);
-            setError(error.message);
-        }
+    if (!mealType || !measurementTime) {
+      setError("Por favor, selecione a refeição e o momento da medição");
+      return;
     }
-};
 
-    return (
-        <div className={styles.page}>
-            <div className={styles.logoContainer}>
-                <Image src={logo} alt="GlicoFlow Logo" width={200} height={200} priority className={styles.logo} />
-            </div>
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Usuário não autenticado");
+      }
 
-            <div className={styles.container}>
-                <h1 className={styles.title}>Sua Glicemia</h1>
-                
-                <div className={styles.inputContainer}>
-                    <input
-                        type="text" // Mudado para text para melhor controle
-                        inputMode="numeric" // Abre teclado numérico em mobile
-                        pattern="\d*" // Aceita apenas números
-                        value={value}
-                        onChange={handleValueChange}
-                        className={`${styles.glucoseInput} ${error ? styles.inputError : ''}`}
-                        placeholder="Digite o valor"
-                    />
-                    <span className={styles.unit}>mg/dL</span>
-                </div>
+      const response = await fetch("http://localhost:5000/api/measurements", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          glycemiaValue: numValue,
+          mealType,
+          measurementTime,
+          recordedAt: new Date().toISOString(),
+        }),
+      });
 
-                {error && (
-                    <div className={styles.errorMessage}>
-                        {error}
-                    </div>
-                )}
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Falha ao adicionar medição");
+      }
 
-                {currentRange && !error && (
-                    <div className={`${styles.rangeIndicator} ${styles[currentRange]}`}>
-                        {currentRange === 'hyper' && (
-                            <>
-                                <span className={`${styles.dot} ${styles.redDot}`}></span>
-                                <span>Hiperglicemia</span>
-                            </>
-                        )}
-                        {currentRange === 'normal' && (
-                            <>
-                                <span className={`${styles.dot} ${styles.greenDot}`}></span>
-                                <span>Faixa Alvo</span>
-                            </>
-                        )}
-                        {currentRange === 'hypo' && (
-                            <>
-                                <span className={`${styles.dot} ${styles.redDot}`}></span>
-                                <span>Hipoglicemia</span>
-                            </>
-                        )}
-                    </div>
-                )}
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Erro:", error);
+      setError(error.message);
+    }
+  };
 
-                <button 
-                    className={styles.continueButton} 
-                    onClick={handleSubmit}
-                    disabled={!value || !currentRange || error}
-                >
-                    Continuar
-                </button>
-            </div>
+  return (
+    <div className={styles.page}>
+      <div className={styles.logoContainer}>
+        <Image
+          src={logo}
+          alt="GlicoFlow Logo"
+          width={200}
+          height={200}
+          priority
+          className={styles.logo}
+        />
+      </div>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Sua Glicemia</h1>
+        <div className={styles.inputContainer}>
+          <input
+            type="text"
+            inputMode="numeric"
+            pattern="\d*"
+            value={value}
+            onChange={handleValueChange}
+            className={`${styles.glucoseInput} ${
+              error ? styles.inputError : ""
+            }`}
+            placeholder="Digite o valor"
+          />
+          <span className={styles.unit}>mg/dL</span>
         </div>
-    );
-} 
+        {error && (
+          <div
+            className={`${styles.errorMessage} ${
+              currentRange === "critical-high"
+                ? styles.criticalHigh
+                : currentRange === "critical-low"
+                ? styles.criticalLow
+                : ""
+            }`}
+          >
+            {error}
+          </div>
+        )}
+        {currentRange && !error && (
+          <div className={`${styles.rangeIndicator} ${styles[currentRange]}`}>
+            {currentRange === "hyper" && (
+              <>
+                <span className={`${styles.dot} ${styles.redDot}`}></span>
+                <span>Hiperglicemia</span>
+              </>
+            )}
+            {currentRange === "normal" && (
+              <>
+                <span className={`${styles.dot} ${styles.greenDot}`}></span>
+                <span>Faixa Alvo</span>
+              </>
+            )}
+            {currentRange === "hypo" && (
+              <>
+                <span className={`${styles.dot} ${styles.redDot}`}></span>
+                <span>Hipoglicemia</span>
+              </>
+            )}
+          </div>
+        )}
+        <div className={styles.selectGroup}>
+          <label>Refeição</label>
+          <select
+            value={mealType}
+            onChange={(e) => setMealType(e.target.value)}
+            className={styles.select}
+          >
+            <option value="">Selecione a refeição</option>
+            {mealTypes.map((meal) => (
+              <option key={meal.id} value={meal.id}>
+                {meal.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className={styles.selectGroup}>
+          <label>Momento da Medição</label>
+          <select
+            value={measurementTime}
+            onChange={(e) => setMeasurementTime(e.target.value)}
+            className={styles.select}
+          >
+            <option value="">Selecione o momento</option>
+            {measurementTimes.map((time) => (
+              <option key={time.id} value={time.id}>
+                {time.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button onClick={handleSubmit} className={styles.continueButton}>
+          Continuar
+        </button>
+      </div>
+    </div>
+  );
+}

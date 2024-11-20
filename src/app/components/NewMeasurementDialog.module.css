@@ -1,0 +1,258 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.container {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+}
+
+.header {
+  background: #4361EE;
+  padding: 20px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+  padding: 0 30px;
+}
+
+.closeButton {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: white;
+  font-size: 32px;
+  font-weight: 300;
+  cursor: pointer;
+  padding: 8px 12px;
+  line-height: 1;
+  opacity: 0.9;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+}
+
+.closeButton:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.content {
+  padding: 24px;
+}
+
+.inputGroup {
+  margin-bottom: 20px;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 14px;
+  color: #4B5563;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input, .select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #E5E7EB;
+  border-radius: 16px;
+  font-size: 16px;
+  color: #1F2937;
+  background: #F9FAFB;
+  transition: all 0.2s ease;
+}
+
+.input {
+  padding-right: 70px;
+  -moz-appearance: textfield;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.unit {
+  position: absolute;
+  right: 16px;
+  color: #6B7280;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.input:focus, .select:focus {
+  border-color: #4361EE;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.1);
+  outline: none;
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+  padding-right: 48px;
+}
+
+.error {
+  margin: 0 24px;
+  padding: 12px 16px;
+  background: #FEE2E2;
+  border-radius: 12px;
+  color: #DC2626;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.error::before {
+  content: "⚠️";
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+}
+
+.cancelButton, .saveButton {
+  all: unset;
+  width: 120px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.cancelButton {
+  background: #F3F4F6;
+  color: #4B5563;
+}
+
+.saveButton {
+  background: #4361EE;
+  color: white;
+}
+
+.buttonContainer button {
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+  vertical-align: middle;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .overlay {
+    padding: 16px;
+  }
+  
+  .container {
+    border-radius: 20px;
+  }
+  
+  .content {
+    padding: 20px;
+  }
+  
+  .saveButton {
+    width: calc(100% - 40px);
+    margin: 0 20px 20px;
+  }
+}
+
+.warning {
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+  white-space: pre-line;
+}
+
+.critical-high {
+  background: #FEE2E2;
+  color: #DC2626;
+  border-left: 4px solid #DC2626;
+}
+
+.critical-low {
+  background: #FEF3C7;
+  color: #B45309;
+  border-left: 4px solid #B45309;
+}
+
+.warning::before {
+  content: "⚠️";
+  margin-right: 8px;
+}
+  

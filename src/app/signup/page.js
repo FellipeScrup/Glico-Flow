@@ -5,6 +5,8 @@ import styles from "./signup.module.css";
 import logo from "@/assets/glicoflow-logo.png";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useRouter } from "next/navigation";
+import PrivacyTerms from "@/app/components/PrivacyTerms";
+import PrivacyCheckbox from "@/app/components/PrivacyCheckbox";
 
 export default function Signup() {
     const router = useRouter();
@@ -12,10 +14,11 @@ export default function Signup() {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
-        terms: false,
+        acceptedTerms: false,
         newsletter: false
     });
     const [errors, setErrors] = useState({});
+    const [showPrivacyTerms, setShowPrivacyTerms] = useState(false);
 
     const validateEmail = (email) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -23,7 +26,7 @@ export default function Signup() {
     };
 
     const handleInputChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, type, checked, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: type === 'checkbox' ? checked : value
@@ -36,17 +39,17 @@ export default function Signup() {
     
         // Basic validation
         if (!formData.email) {
-            newErrors.email = 'Email is required';
+            newErrors.email = 'Email é necessário';
         } else if (!validateEmail(formData.email)) {
-            newErrors.email = 'Invalid email';
+            newErrors.email = 'Email inválido';
         }
     
         if (!formData.password) {
-            newErrors.password = 'Password is required';
+            newErrors.password = 'Senha é necessária';
         }
     
-        if (!formData.terms) {
-            newErrors.terms = 'You must accept the terms';
+        if (!formData.acceptedTerms) {
+            newErrors.acceptedTerms = 'Você deve aceitar os termos';
         }
     
         setErrors(newErrors);
@@ -61,20 +64,20 @@ export default function Signup() {
                     body: JSON.stringify({
                         email: formData.email,
                         password: formData.password,
-                        termsAccepted: formData.terms,
+                        termsAccepted: formData.acceptedTerms,
                         newsletter: formData.newsletter || false
                     }),
                 });
     
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to sign up');
+                    throw new Error(errorData.message || 'Falha ao criar usuário');
                 }
     
                 const data = await response.json();
                 localStorage.setItem('token', data.token); // Store the token
                 localStorage.setItem('userId', data.user._id);
-                console.log('User created successfully:', data);
+                console.log('Usuário criado com sucesso:', data);
                 // Redirect to the personal data page
                 router.push('/personal-data');
             } catch (error) {
@@ -82,7 +85,6 @@ export default function Signup() {
             }
         }
     };
-    
     
     return (
         <div className={styles.page}>
@@ -98,7 +100,7 @@ export default function Signup() {
             </div>
 
             <div className={styles.formContainer}>
-                <h1 className={styles.title}>Create Account</h1>
+                <h1 className={styles.title}>Crie sua conta</h1>
                 
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
@@ -109,7 +111,7 @@ export default function Signup() {
                             value={formData.email}
                             onChange={handleInputChange}
                             className={errors.email ? styles.inputError : ''}
-                            placeholder="Enter your email *"
+                            placeholder="Digite seu email *"
                             required
                         />
                         {errors.email && (
@@ -126,7 +128,7 @@ export default function Signup() {
                                 value={formData.password}
                                 onChange={handleInputChange}
                                 className={errors.password ? styles.inputError : ''}
-                                placeholder="Enter your password *"
+                                placeholder="Digite sua senha *"
                                 required
                             />
                             <button 
@@ -142,23 +144,18 @@ export default function Signup() {
                         )}
                     </div>
 
-                    <div className={styles.checkboxGroup}>
-                        <label className={styles.checkboxLabel}>
-                            <input
-                                type="checkbox"
-                                name="terms"
-                                checked={formData.terms}
-                                onChange={handleInputChange}
-                            />
-                            <span className={styles.checkmark}></span>
-                            <span className={styles.checkboxText}>
-                                I accept the <a href="#" className={styles.termsLink}>terms of privacy</a>
-                            </span>
-                        </label>
-                        {errors.terms && (
-                            <span className={styles.errorMessage}>{errors.terms}</span>
-                        )}
-                    </div>
+                    <PrivacyCheckbox 
+                        checked={formData.acceptedTerms}
+                        onChange={(e) => {
+                            setFormData(prev => ({
+                                ...prev,
+                                acceptedTerms: e.target.checked
+                            }));
+                        }}
+                    />
+                    {errors.acceptedTerms && (
+                        <span className={styles.errorMessage}>{errors.acceptedTerms}</span>
+                    )}
 
                     <div className={styles.checkboxGroup}>
                         <label className={styles.checkboxLabel}>
@@ -169,16 +166,15 @@ export default function Signup() {
                                 onChange={handleInputChange}
                             />
                             <span className={styles.checkmark}></span>
-                            <span className={styles.checkboxText}>Receive news updates by email</span>
+                            <span className={styles.checkboxText}>Receber atualizações por email</span>
                         </label>
                     </div>
 
                     <button type="submit" className={styles.submitButton}>
-                        Create Account
+                        Criar Conta
                     </button>
                 </form>
             </div>
         </div>
     );
 }
-

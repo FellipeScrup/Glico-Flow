@@ -15,16 +15,16 @@ export default function DiabetesType() {
     const [error, setError] = useState('');
 
     const diabetesTypes = [
-        { id: 'type1', label: 'TYPE 1' },
-        { id: 'type2', label: 'TYPE 2' },
+        { id: 'type1', label: 'TIPO 1' },
+        { id: 'type2', label: 'TIPO 2' },
         { id: 'pre', label: 'PRE DIABETES' },
-        { id: 'gestational', label: 'GESTATIONAL' },
+        { id: 'gestational', label: 'GESTACIONAL' },
     ];
 
     const treatmentTypes = [
-        { id: 'pen_syringe', label: 'PEN / SYRINGES' },
-        { id: 'pump', label: 'PUMP' },
-        { id: 'no_insulin', label: 'NO INSULIN' },
+        { id: 'pen_syringe', label: 'CANETA / SERINGAs' },
+        { id: 'pump', label: 'BOMBA' },
+        { id: 'no_insulin', label: 'SEM INSULINA' },
     ];
 
 // In diabetes-type.js

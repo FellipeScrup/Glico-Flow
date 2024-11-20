@@ -364,3 +364,31 @@
         font-size: 15px;
     }
 }
+
+.errorAlert {
+    background-color: #FEE2E2;
+    border: 1px solid #FCA5A5;
+    color: #DC2626;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.submitButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: #A5B4FC;
+}
+
+/* Adicione um efeito de loading ao botão */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.submitButton:disabled {
+    animation: pulse 1.5s infinite;
+}

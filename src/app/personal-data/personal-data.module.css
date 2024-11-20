@@ -65,6 +65,20 @@
     font-size: 15px;
     color: var(--secondary);
     transition: all 0.3s ease;
+    -moz-appearance: textfield;
+}
+
+.inputGroup input::-webkit-outer-spin-button,
+.inputGroup input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.inputGroup select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: none;
 }
 
 .inputRow {

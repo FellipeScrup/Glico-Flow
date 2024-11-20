@@ -1,0 +1,184 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 16px;
+    backdrop-filter: blur(4px);
+}
+
+.modal {
+    background: white;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #E5E7EB;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+.languageSwitch {
+    text-align: right;
+    padding: 16px 24px 0;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.languageSwitch button {
+    background: #F3F4F6;
+    border: 1px solid #E5E7EB;
+    color: #4361EE;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.languageSwitch button:hover {
+    background: #E5E7EB;
+    color: #3651D4;
+}
+
+.languageSwitch button::before {
+    content: '🌐';
+    font-size: 16px;
+}
+
+.closeButton {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: #4361EE;
+    color: white;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.closeButton:hover {
+    background: #3651D4;
+}
+
+.content {
+    flex: 1;
+    overflow: hidden;
+}
+
+.scrollContent {
+    padding: 24px;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.scrollContent h3 {
+    color: #111827;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 24px 0 12px;
+}
+
+.scrollContent h3:first-child {
+    margin-top: 0;
+}
+
+.scrollContent p {
+    color: #4B5563;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 12px 0;
+}
+
+.scrollContent ul {
+    padding-left: 24px;
+    margin: 12px 0;
+}
+
+.scrollContent li {
+    color: #4B5563;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 8px 0;
+}
+
+.footer {
+    padding: 16px 24px;
+    border-top: 1px solid #E5E7EB;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.acceptButton, .cancelButton {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.acceptButton {
+    background: #4361EE;
+    color: white;
+    border: none;
+}
+
+.cancelButton {
+    background: #F3F4F6;
+    color: #6B7280;
+    border: 1px solid #E5E7EB;
+}
+
+.acceptButton:hover {
+    background: #3651D4;
+}
+
+.cancelButton:hover {
+    background: #E5E7EB;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .modal {
+        max-height: 95vh;
+    }
+    
+    .scrollContent {
+        max-height: 65vh;
+    }
+} 
