@@ -46,10 +46,10 @@
 html,
 body {
   max-width: 100vw;
-  overflow: hidden;
+  min-height: 100vh;
   height: 100%;
-  position: fixed;
   width: 100%;
+  overscroll-behavior: none;
 }
 
 body {
@@ -97,6 +97,7 @@ input, button, select, textarea {
   appearance: none;
   font-size: 16px !important;
   border-radius: 8px;
+  touch-action: manipulation;
 }
 
 /* Ajuste para select */
@@ -246,4 +247,31 @@ input, select, textarea {
   --success: #10B981;
   --warning: #F59E0B;
   --chart-bg: #1F2937;
+}
+
+/* Ajustes para inputs em dispositivos móveis */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+textarea {
+  -webkit-user-select: text;
+  user-select: text;
+  touch-action: manipulation;
+  cursor: text;
+}
+
+/* Prevenir zoom em inputs no iOS */
+@supports (-webkit-touch-callout: none) {
+  input, 
+  select, 
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Ajuste para viewport em dispositivos móveis */
+@viewport {
+  width: device-width;
+  zoom: 1.0;
 }
