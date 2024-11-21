@@ -417,9 +417,25 @@
     color: #000000;
     font-weight: 500;
     transition: all 0.3s ease;
-    -moz-appearance: textfield;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
+/* Estilos específicos para iOS */
+@supports (-webkit-touch-callout: none) {
+    .glucoseInput {
+        font-size: 16px !important;
+        padding: 12px !important;
+    }
+    
+    input[type="number"] {
+        -webkit-text-security: none !important;
+        -webkit-user-select: text !important;
+        user-select: text !important;
+    }
+}
+
+/* Remove as setas do input number */
 .glucoseInput::-webkit-outer-spin-button,
 .glucoseInput::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -558,7 +574,7 @@
 }
 
 @keyframes alertPulse {
-    0% {
+    from {
         transform: scale(1);
         box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
     }
@@ -573,11 +589,11 @@
 }
 
 @keyframes slideInAndPulse {
-    0% {
+    from {
         opacity: 0;
         transform: translateY(-10px);
     }
-    100% {
+    to {
         opacity: 1;
         transform: translateY(0);
     }

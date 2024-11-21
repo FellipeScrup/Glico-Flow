@@ -136,15 +136,16 @@ Meça novamente em 15min`);
         <h1 className={styles.title}>Sua Glicemia</h1>
         <div className={styles.inputContainer}>
           <input
-            type="text"
+            type="number"
             inputMode="numeric"
-            pattern="\d*"
+            pattern="[0-9]*"
             value={value}
             onChange={handleValueChange}
-            className={`${styles.glucoseInput} ${
-              error ? styles.inputError : ""
-            }`}
+            className={`${styles.glucoseInput} ${error ? styles.inputError : ""}`}
             placeholder="Digite o valor"
+            min="0"
+            max="600"
+            step="1"
           />
           <span className={styles.unit}>mg/dL</span>
         </div>
