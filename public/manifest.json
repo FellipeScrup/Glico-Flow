@@ -7,6 +7,8 @@
   "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#4361EE",
+  "prefer_related_applications": false,
+  "categories": ["health", "medical"],
   "icons": [
     {
       "src": "/icon-192.png",
@@ -24,6 +26,13 @@
       "src": "/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Adicionar Glicemia",
+      "url": "/glycemia-ranges",
+      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
     }
   ]
 } 

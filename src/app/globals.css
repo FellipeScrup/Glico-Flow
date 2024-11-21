@@ -34,6 +34,9 @@
   --success: #059669;
   --warning: #D97706;
   --chart-bg: #FFFFFF;
+    --safe-area-top: env(safe-area-inset-top);
+  --safe-area-bottom: env(safe-area-inset-bottom);
+  --app-height: 100%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -42,8 +45,52 @@
     --foreground: #ededed;
   }
 }
+@media (display-mode: standalone) {
+  body {
+    position: fixed;
+    height: 100vh;
+    height: -webkit-fill-available;
+    width: 100vw;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+    background-color: var(--background);
+  }
+  
+  input, 
+  textarea, 
+  select {
+    font-size: 16px !important;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 8px;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
+    touch-action: manipulation;
+  }
 
-html,
+  /* Prevenir comportamentos indesejados */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Permitir seleção apenas em inputs */
+  * {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  input, textarea {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+  }
+}
+
+
 body {
   max-width: 100vw;
   min-height: 100vh;

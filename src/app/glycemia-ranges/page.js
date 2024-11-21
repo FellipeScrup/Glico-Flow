@@ -139,13 +139,16 @@ Meça novamente em 15min`);
             type="number"
             inputMode="numeric"
             pattern="[0-9]*"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
             value={value}
             onChange={handleValueChange}
             className={styles.glucoseInput}
             placeholder="Digite o valor"
             min="0"
             max="600"
-            step="1"
           />
           <span className={styles.unit}>mg/dL</span>
         </div>

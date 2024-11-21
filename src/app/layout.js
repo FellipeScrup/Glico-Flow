@@ -4,29 +4,21 @@ import { Metadata } from 'next'
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
 export const metadata = {
-  title: "GlicoFlow",
-  description: "Controle sua diabetes",
-  manifest: "/manifest.json",
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "GlicoFlow",
-    startupImage: [
-      {
-        url: "/splash/apple-splash-2048-2732.png",
-        media: "(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
-      }
-    ]
-  },
-  formatDetection: {
-    telephone: false
-  },
+  title: 'GlicoFlow',
+  description: 'Controle sua diabetes',
+  manifest: '/manifest.json',
   viewport: {
     width: 'device-width',
     initialScale: 1,
     maximumScale: 1,
     userScalable: 'no',
     viewportFit: 'cover',
+    height: 'device-height'
+  },
+  appleWebApp: {
+    capable: 'yes',
+    statusBarStyle: 'default',
+    title: 'GlicoFlow'
   }
 };
 
@@ -45,22 +37,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
       <head>
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-touch-fullscreen" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="GlicoFlow" />
-        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#4361EE" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <link rel="manifest" href="/manifest.json" />
       </head>
-      <body>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
