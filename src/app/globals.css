@@ -97,7 +97,8 @@ input, button, select, textarea {
   appearance: none;
   font-size: 16px !important;
   border-radius: 8px;
-  touch-action: manipulation;
+  touch-action: pan-x pan-y;
+  cursor: text;
 }
 
 /* Ajuste para select */
@@ -274,4 +275,33 @@ textarea {
 @viewport {
   width: device-width;
   zoom: 1.0;
+}
+
+/* Ajustes específicos para iOS */
+@supports (-webkit-touch-callout: none) {
+  input, select, textarea {
+    font-size: 16px !important;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
+  }
+}
+
+/* Remover estilização padrão do iOS */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 8px;
 }

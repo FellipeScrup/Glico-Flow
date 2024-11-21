@@ -28,9 +28,11 @@ export const themeColor = "#4361EE";
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  viewportFit: "cover"
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: "cover",
+  minimumScale: 1,
+  interactiveWidget: "resizes-visual"
 };
 
 export default function RootLayout({ children }) {
@@ -47,6 +49,7 @@ export default function RootLayout({ children }) {
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-TileColor" content="#4361EE" />
         <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover, user-scalable=yes" />
 
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="192x192" href="/glicoflow-logo-192.png" />
