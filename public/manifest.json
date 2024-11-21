@@ -8,6 +8,8 @@
   "background_color": "#ffffff",
   "theme_color": "#4361EE",
   "prefer_related_applications": false,
+  "id": "/",
+  "scope": "/",
   "categories": ["health", "medical"],
   "icons": [
     {
@@ -23,14 +25,40 @@
       "purpose": "any maskable"
     },
     {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
+      "src": "/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-152.png",
+      "sizes": "152x152",
       "type": "image/png"
     }
   ],
   "shortcuts": [
     {
-      "name": "Adicionar Glicemia",
+      "name": "Nova Medição",
       "url": "/glycemia-ranges",
       "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
     }
