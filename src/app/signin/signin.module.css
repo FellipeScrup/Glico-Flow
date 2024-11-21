@@ -56,16 +56,18 @@
 }
 
 .inputGroup input {
-    width: 100%;
     padding: 16px;
-    background: var(--gray-100);
-    border: 2px solid transparent;
-    border-radius: 16px;
-    font-size: 16px;
-    color: var(--secondary);
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-    max-width: 100%;
+    width: 100%;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 16px !important;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    touch-action: manipulation;
 }
 
 .inputGroup input:focus {
@@ -391,4 +393,17 @@
 
 .submitButton:disabled {
     animation: pulse 1.5s infinite;
+}
+
+/* Ajustes para modo PWA */
+@media (display-mode: standalone) {
+  .inputGroup input {
+    font-size: 16px !important;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: default;
+  }
+  
+  .formContainer {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }

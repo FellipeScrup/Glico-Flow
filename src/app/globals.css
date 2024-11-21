@@ -359,3 +359,55 @@ input[type="number"] {
     font-size: 16px !important;
   }
 }
+
+/* Remova as regras duplicadas e mantenha apenas estas */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  font-size: 16px !important;
+  border-radius: 8px;
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  -webkit-user-select: text !important;
+  user-select: text !important;
+  touch-action: manipulation;
+  cursor: text !important;
+}
+
+/* Ajustes específicos para PWA no iOS */
+@media (display-mode: standalone) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea {
+    font-size: 16px !important;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
+    touch-action: manipulation;
+    cursor: text !important;
+  }
+
+  /* Prevenir zoom */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+
+  /* Ajuste para o body em PWA */
+  body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: calc(env(safe-area-inset-bottom) + 80px);
+  }
+}
