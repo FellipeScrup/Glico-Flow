@@ -41,7 +41,7 @@ const handleSubmit = async (e) => {
             throw new Error('No token found, user is not authorized');
         }
 
-        const response = await fetch('http://localhost:5000/api/users/update', {
+        const response = await fetch('https://glico-flow-api.onrender.com/api/users/update', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
