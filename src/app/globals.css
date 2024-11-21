@@ -305,3 +305,17 @@ input[type="number"] {
   appearance: none;
   border-radius: 8px;
 }
+
+/* Estilos específicos para iOS */
+@supports (-webkit-touch-callout: none) {
+  input[type="number"],
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    font-size: 16px !important;
+    -webkit-text-security: none !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    -webkit-touch-callout: default !important;
+  }
+}

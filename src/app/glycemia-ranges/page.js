@@ -141,7 +141,7 @@ Meça novamente em 15min`);
             pattern="[0-9]*"
             value={value}
             onChange={handleValueChange}
-            className={`${styles.glucoseInput} ${error ? styles.inputError : ""}`}
+            className={styles.glucoseInput}
             placeholder="Digite o valor"
             min="0"
             max="600"

@@ -421,31 +421,24 @@
     appearance: none;
 }
 
-/* Estilos específicos para iOS */
-@supports (-webkit-touch-callout: none) {
-    .glucoseInput {
-        font-size: 16px !important;
-        padding: 12px !important;
-    }
-    
-    input[type="number"] {
-        -webkit-text-security: none !important;
-        -webkit-user-select: text !important;
-        user-select: text !important;
-    }
-}
-
-/* Remove as setas do input number */
+/* Remover setas do input number */
 .glucoseInput::-webkit-outer-spin-button,
 .glucoseInput::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.glucoseInput:focus {
-    outline: none;
-    border-color: #4361EE;
-    box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.1);
+/* Firefox */
+.glucoseInput[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Estilos específicos para iOS */
+@supports (-webkit-touch-callout: none) {
+  .glucoseInput {
+    font-size: 16px !important;
+    padding: 12px !important;
+  }
 }
 
 .unit {
