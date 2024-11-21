@@ -50,9 +50,13 @@ body {
   height: 100%;
   width: 100%;
   overscroll-behavior: none;
+  position: relative;
 }
 
 body {
+  padding-bottom: env(safe-area-inset-bottom, 80px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
@@ -206,7 +210,10 @@ select {
 
 @media (display-mode: standalone) {
   body {
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: calc(env(safe-area-inset-bottom) + 80px);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 }
 

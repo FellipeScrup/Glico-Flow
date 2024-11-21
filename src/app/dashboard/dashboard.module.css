@@ -1255,3 +1255,26 @@
   display: inline-block;
   flex-shrink: 0;
 }
+
+.container {
+  padding: 16px;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 20px));
+  min-height: 100vh;
+  position: relative;
+}
+
+.chartSection {
+  margin-bottom: 100px; /* Espaço extra para evitar que o conteúdo seja coberto */
+}
+
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--background);
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 1000;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}

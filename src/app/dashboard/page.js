@@ -256,9 +256,12 @@ export default function Dashboard() {
             setTimeout(() => {
                 const chartElement = document.getElementById('chart-section');
                 if (chartElement) {
-                    chartElement.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'center'
+                    const yOffset = -100; // Ajuste este valor conforme necessário
+                    const y = chartElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    
+                    window.scrollTo({
+                        top: y,
+                        behavior: 'smooth'
                     });
                 }
             }, 100); // Pequeno delay para garantir que a expansão começou
