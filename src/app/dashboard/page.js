@@ -101,14 +101,14 @@ export default function Dashboard() {
                     const value = measurement.glycemiaValue;
                     if (value > 180) acc.hyper++;
                     else if (value >= 70 && value <= 180) acc.normal++;
-                    else if (value < 70) acc.hypo++;
+                    else acc.hypo++;
                     return acc;
                 }, { hyper: 0, normal: 0, hypo: 0 });
 
                 setGlycemiaStats({
-                    hyper: ((stats.hyper / total) * 100).toFixed(1),
-                    normal: ((stats.normal / total) * 100).toFixed(1),
-                    hypo: ((stats.hypo / total) * 100).toFixed(1)
+                    hyper: Number((stats.hyper / total) * 100).toFixed(1),
+                    normal: Number((stats.normal / total) * 100).toFixed(1),
+                    hypo: Number((stats.hypo / total) * 100).toFixed(1)
                 });
             }
 
@@ -168,22 +168,20 @@ export default function Dashboard() {
     const chartData = {
         labels: ['Hiperglicemia', 'Faixa Alvo', 'Hipoglicemia'],
         datasets: [{
-            data: [glycemiaStats.hyper, glycemiaStats.normal, glycemiaStats.hypo],
-            backgroundColor: [
-                '#FF8B9A',  // Rosa suave para Hiperglicemia
-                '#54DCC3',  // Azul turquesa para Faixa Alvo
-                '#FFD66B'   // Amarelo suave para Hipoglicemia
+            data: [
+                Number(glycemiaStats.hyper) || 0,
+                Number(glycemiaStats.normal) || 0,
+                Number(glycemiaStats.hypo) || 0
             ],
-            borderWidth: 0,
-            hoverOffset: 4,
-            borderRadius: 3
+            backgroundColor: ['#FF6B6B', '#4ECB71', '#FFE44D'],
+            borderWidth: 0
         }]
     };
 
     const chartOptions = {
         maintainAspectRatio: false,
         responsive: true,
-        cutout: '70%', // Faz o gráfico tipo donut
+        cutout: '70%',
         plugins: {
             legend: {
                 display: false
@@ -201,9 +199,15 @@ export default function Dashboard() {
                 displayColors: false,
                 callbacks: {
                     label: function(context) {
-                        return `${context.label}: ${context.raw}%`;
+                        const value = Number(context.raw).toFixed(1);
+                        return `${context.label}: ${value}%`;
                     }
                 }
+            }
+        },
+        elements: {
+            arc: {
+                borderWidth: 0
             }
         }
     };
@@ -407,6 +411,54 @@ export default function Dashboard() {
                         </div>
                     </div>
                 )}
+            </div>
+        );
+    };
+
+    // Componente de estatísticas
+    const StatsLegend = () => {
+        return (
+            <div className={styles.statsLegend}>
+                <div className={styles.legendItem}>
+                    <span className={styles.dot} style={{ backgroundColor: '#FF6B6B' }}></span>
+                    <span>Hiperglicemia</span>
+                </div>
+                <div className={styles.legendItem}>
+                    <span className={styles.dot} style={{ backgroundColor: '#4ECB71' }}></span>
+                    <span>Faixa Alvo</span>
+                </div>
+                <div className={styles.legendItem}>
+                    <span className={styles.dot} style={{ backgroundColor: '#FFE44D' }}></span>
+                    <span>Hipoglicemia</span>
+                </div>
+            </div>
+        );
+    };
+
+    const StatsValues = ({ stats }) => {
+        return (
+            <div className={styles.statsValues}>
+                <div className={styles.statRow}>
+                    <div className={styles.statLabel}>
+                        <span className={styles.dot} style={{ backgroundColor: '#FF6B6B' }}></span>
+                        <span>Hiperglicemia:</span>
+                    </div>
+                    <span className={styles.statValue}>{stats.hyper}%</span>
+                </div>
+                <div className={styles.statRow}>
+                    <div className={styles.statLabel}>
+                        <span className={styles.dot} style={{ backgroundColor: '#4ECB71' }}></span>
+                        <span>Faixa Alvo:</span>
+                    </div>
+                    <span className={styles.statValue}>{stats.normal}%</span>
+                </div>
+                <div className={styles.statRow}>
+                    <div className={styles.statLabel}>
+                        <span className={styles.dot} style={{ backgroundColor: '#FFE44D' }}></span>
+                        <span>Hipoglicemia:</span>
+                    </div>
+                    <span className={styles.statValue}>{stats.hypo}%</span>
+                </div>
             </div>
         );
     };
