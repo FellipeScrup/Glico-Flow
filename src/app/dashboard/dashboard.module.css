@@ -6,6 +6,10 @@
     flex-direction: column;
     gap: 16px;
     box-sizing: border-box;
+    position: relative;
+    height: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
 }
 
 .header {
@@ -1255,10 +1259,10 @@
 }
 
 .container {
-  padding: 16px;
-  padding-bottom: calc(80px + env(safe-area-inset-bottom, 20px));
-  min-height: 100vh;
-  position: relative;
+    padding: 16px;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 20px));
+    position: relative;
+    overflow-y: visible;
 }
 
 .chartSection {
@@ -1266,13 +1270,13 @@
 }
 
 .bottomNav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--background);
-  padding: 16px;
-  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-  z-index: 1000;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--background);
+    padding: 16px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }

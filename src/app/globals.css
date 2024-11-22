@@ -123,6 +123,19 @@ a {
   text-decoration: none;
 }
 
+html, body {
+  height: 100%;
+  overflow-y: visible;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+#__next {
+  height: auto;
+  min-height: 100%;
+  overflow-y: visible;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
