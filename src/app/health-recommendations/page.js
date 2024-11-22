@@ -31,7 +31,7 @@ export default function HealthRecommendations() {
       }
 
       // Buscar medições
-      const measurementsResponse = await fetch('http://localhost:5000/api/measurements', {
+      const measurementsResponse = await fetch('https://glico-flow-api.onrender.com/api/measurements', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -41,7 +41,7 @@ export default function HealthRecommendations() {
       const measurements = await measurementsResponse.json();
       
       // Buscar perfil e metas do usuário
-      const profileResponse = await fetch('http://localhost:5000/api/users/profile', {
+      const profileResponse = await fetch('https://glico-flow-api.onrender.com/api/users/profile', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -51,7 +51,7 @@ export default function HealthRecommendations() {
       const profile = await profileResponse.json();
 
       // Buscar metas específicas
-      const goalsResponse = await fetch('http://localhost:5000/api/users/goals', {
+      const goalsResponse = await fetch('https://glico-flow-api.onrender.com/api/users/goals', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
