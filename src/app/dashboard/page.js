@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import GlycemiaGoals from '../components/GlycemiaGoals';
 import NewMeasurementDialog from '../components/NewMeasurementDialog';
 import { useTheme } from '@/contexts/ThemeContext';
+import HealthRecommendationsPreview from '../components/HealthRecommendationsPreview';
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -84,7 +85,7 @@ export default function Dashboard() {
             if (!token) throw new Error('Usuário não autorizado');
 
             // Buscar medições para calcular estatísticas
-            const measurementsResponse = await fetch('https://glico-flow-api.onrender.com/api/measurements', {
+            const measurementsResponse = await fetch('http://localhost:5000/api/measurements', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
@@ -113,14 +114,14 @@ export default function Dashboard() {
             }
 
             // Buscar perfil e metas do usuário
-            const profileResponse = await fetch('https://glico-flow-api.onrender.com/api/users/profile', {
+            const profileResponse = await fetch('http://localhost:5000/api/users/profile', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
             });
     
             // Buscar metas específicas
-            const goalsResponse = await fetch('https://glico-flow-api.onrender.com/api/users/goals', {
+            const goalsResponse = await fetch('http://localhost:5000/api/users/goals', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
@@ -227,7 +228,7 @@ export default function Dashboard() {
         try {
             // Implementar a lógica de salvar a medição
             const token = localStorage.getItem('token');
-            const response = await fetch('https://glico-flow-api.onrender.com/api/measurements', {
+            const response = await fetch('http://localhost:5000/api/measurements', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -619,6 +620,8 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
+
+            <HealthRecommendationsPreview />
 
             <div className={styles.modernButtons}>
                 <button 

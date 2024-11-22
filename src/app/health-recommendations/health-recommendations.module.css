@@ -1,0 +1,984 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  background: #F3F4F6;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.backButton {
+  background: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #1F2937;
+}
+
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #4B5563;
+  transition: all 0.2s ease;
+}
+
+.tab.active {
+  background: #4361EE;
+  color: white;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  margin: 0 0 16px 0;
+  color: #4361EE;
+}
+
+.cardContent {
+  color: #4B5563;
+}
+
+.cardContent p {
+  margin: 8px 0;
+}
+
+.benefits {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #E5E7EB;
+}
+
+.benefits h4 {
+  color: #059669;
+  margin: 0 0 8px 0;
+}
+
+.benefits ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.benefits li {
+  margin: 4px 0;
+}
+
+.nutritionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mealTiming {
+  background: #F3F4F6;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.mealTiming p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #374151;
+}
+
+.suggestions h4 {
+  color: #4361EE;
+  margin: 16px 0 8px;
+  font-size: 1.1rem;
+}
+
+.suggestions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suggestions li {
+  padding: 10px 0;
+  border-bottom: 1px solid #E5E7EB;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #4B5563;
+}
+
+.suggestions li:last-child {
+  border-bottom: none;
+}
+
+.tips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #EEF2FF;
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+.tips p {
+  margin: 0;
+  font-size: 1rem;
+  color: #4361EE;
+}
+
+.warningCard {
+  background: #FEF3C7;
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+.warningCard h4 {
+  color: #92400E;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.warningCard ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #92400E;
+}
+
+.warningCard li {
+  margin: 8px 0;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 16px;
+  }
+  
+  .header h1 {
+    font-size: 1.2rem;
+  }
+  
+  .tab {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  
+  .mealTiming {
+    padding: 8px;
+  }
+  
+  .suggestions li {
+    font-size: 0.9rem;
+  }
+  
+  .tips {
+    font-size: 0.9rem;
+  }
+} 
+
+.pageContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f6f8ff 0%, #f0f4ff 100%);
+  padding: 20px;
+  padding-top: 0;
+}
+
+.headerGlass {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: -20px -20px 20px -20px;
+  z-index: 10;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.backButton {
+  background: transparent;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #4361EE;
+  transition: all 0.2s ease;
+}
+
+.backButton:hover {
+  background: rgba(67, 97, 238, 0.1);
+  transform: scale(1.05);
+}
+
+.statusCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.statusCard {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.statusCard:hover {
+  transform: translateY(-2px);
+}
+
+.statusIcon {
+  font-size: 24px;
+  width: 48px;
+  height: 48px;
+  background: #f0f4ff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statusInfo h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6B7280;
+}
+
+.statusInfo p {
+  margin: 4px 0 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4361EE;
+}
+
+.tabsContainer {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 0 16px;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background: #e5e7eb;
+}
+
+.activeTab {
+  background: #4361ee;
+  color: white;
+}
+
+.tabIcon {
+  font-size: 1.2rem;
+}
+
+.contentContainer {
+  position: relative;
+  overflow: hidden;
+  min-height: 400px; /* Ajuste conforme necessário */
+}
+
+/* Ajustes para animação suave */
+.exerciseContent,
+.nutritionContent {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Animações para os cards */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: slideIn 0.3s ease forwards;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .pageContainer {
+    padding: 16px;
+  }
+
+  .headerGlass {
+    padding: 16px;
+    margin: -16px -16px 16px -16px;
+  }
+
+  .statusCards {
+    grid-template-columns: 1fr;
+  }
+
+  .tab {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Efeitos de hover modernos */
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(67, 97, 238, 0.1);
+}
+
+/* Estilo para as dicas */
+.tips {
+  background: linear-gradient(135deg, #4361EE10, #4361EE20);
+  border-left: 4px solid #4361EE;
+}
+
+/* Badges para informações importantes */
+.badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: #4361EE10;
+  color: #4361EE;
+  margin-right: 8px;
+}
+
+.emergencyAlert {
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 16px;
+  animation: pulseAlert 2s infinite;
+}
+
+.emergencyAlert.high {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8787 100%);
+  border: 2px solid #FF4646;
+}
+
+.emergencyAlert.low {
+  background: linear-gradient(135deg, #FFD93D 0%, #FFE69A 100%);
+  border: 2px solid #FFB302;
+}
+
+.alertHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.alertIcon {
+  font-size: 24px;
+}
+
+.alertHeader h2 {
+  margin: 0;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.alertValue {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 16px 0;
+}
+
+.immediateActions {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.immediateActions h4 {
+  color: white;
+  margin: 0 0 12px 0;
+}
+
+.immediateActions ul {
+  margin: 0;
+  padding-left: 20px;
+  color: white;
+}
+
+.immediateActions li {
+  margin: 8px 0;
+}
+
+@keyframes pulseAlert {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.alertMode {
+  opacity: 0.7;
+}
+
+/* Estilos específicos para recomendações em estado de alerta */
+.high .contentContainer {
+  border: 2px solid #FF4646;
+}
+
+.low .contentContainer {
+  border: 2px solid #FFB302;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .emergencyAlert {
+    margin: 16px 0;
+    padding: 16px;
+  }
+
+  .alertHeader h2 {
+    font-size: 1.2rem;
+  }
+
+  .alertValue {
+    font-size: 1rem;
+  }
+} 
+
+.alertWrapper {
+  position: sticky;
+  top: 80px;
+  z-index: 9;
+  margin: -10px -20px 20px -20px;
+  padding: 0 20px;
+}
+
+.emergencyAlert {
+  background: #FF6B6B;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(255, 107, 107, 0.2);
+  border: none;
+}
+
+/* Ajuste a responsividade */
+@media (max-width: 768px) {
+  .alertWrapper {
+    top: 70px;
+    margin: -5px -16px 16px -16px;
+    padding: 0 16px;
+  }
+} 
+
+/* Ajustes para telas pequenas */
+@media (max-width: 768px) {
+  .mealTiming p {
+    font-size: 1.1rem; /* Aumentado */
+    font-weight: 500;
+  }
+
+  .suggestions h4 {
+    font-size: 1.2rem; /* Aumentado */
+    font-weight: 600;
+  }
+
+  .suggestions li {
+    font-size: 1.1rem; /* Aumentado */
+    padding: 12px 0;
+    line-height: 1.6;
+  }
+
+  .tips p {
+    font-size: 1.1rem; /* Aumentado */
+  }
+}
+
+/* Ajustes específicos para telas muito pequenas */
+@media (max-width: 360px) {
+  .mealTiming {
+    padding: 10px;
+  }
+
+  .mealTiming p {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .suggestions li {
+    padding: 10px 0;
+    font-size: 1rem;
+  }
+
+  /* Aumentar contraste */
+  .suggestions li {
+    color: #1F2937; /* Cor mais escura para melhor legibilidade */
+  }
+
+  .mealTiming p {
+    color: #1F2937;
+  }
+} 
+
+.recommendationsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 16px;
+}
+
+.recommendationCard {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.recommendationCard h3 {
+  margin: 0 0 16px;
+  color: #4361ee;
+  font-size: 1.2rem;
+}
+
+.recommendationCard p {
+  margin: 8px 0;
+  color: #4b5563;
+}
+
+.portions ul,
+.instructions {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.portions li,
+.instructions li {
+  padding: 4px 0;
+  color: #4b5563;
+}
+
+.notes {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  font-style: italic;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .recommendationsGrid {
+    grid-template-columns: 1fr;
+  }
+} 
+
+.suggestionCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.suggestionCard {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.suggestionCard h5 {
+  margin: 0 0 12px;
+  color: #4361ee;
+  font-size: 1.1rem;
+}
+
+.macros {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.ingredients {
+  margin-top: 12px;
+}
+
+.ingredients h6 {
+  margin: 0 0 8px;
+  color: #374151;
+}
+
+.ingredients ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+.ingredients li {
+  padding: 4px 0;
+}
+
+.recipeLink {
+  display: inline-block;
+  margin-top: 12px;
+  color: #4361ee;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.recipeLink:hover {
+  text-decoration: underline;
+}
+
+.suggestionsButton {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  background: #4361ee;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.suggestionsButton:hover {
+  background: #3651d4;
+  transform: translateY(-1px);
+}
+
+.suggestionsPanel {
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.suggestionsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.suggestionCard {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mealCard {
+  position: relative;
+  overflow: hidden;
+}
+
+.mealHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.mealIcon {
+  font-size: 1.5rem;
+}
+
+.mealCard {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.suggestionsButton {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  background: #4361ee;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.suggestionsPanel {
+  margin-top: 16px;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.suggestionsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.suggestionCard {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.ingredients ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 8px 0;
+}
+
+.ingredients li {
+  padding: 4px 0;
+  color: #4b5563;
+}
+
+.recipeLink {
+  display: inline-block;
+  margin-top: 12px;
+  color: #4361ee;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.recipeLink:hover {
+  text-decoration: underline;
+}
+
+.mealHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.mealIcon {
+  font-size: 1.5rem;
+}
+
+.notes {
+  margin-top: 12px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.nutritionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.mealCard {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mealHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.mealIcon {
+  font-size: 24px;
+}
+
+.mealContent {
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+.portion {
+  margin: 4px 0;
+  color: #4b5563;
+}
+
+.timing {
+  margin-top: 12px;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.notes {
+  margin-top: 12px;
+  font-style: italic;
+  color: #6b7280;
+}
+
+.suggestionsButton {
+  width: 100%;
+  padding: 12px;
+  background: #4361ee;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.suggestionsButton:hover {
+  background: #3651d4;
+  transform: translateY(-1px);
+} 
+
+.suggestionItem {
+  margin-bottom: 12px;
+}
+
+.suggestionsButton {
+  width: 100%;
+  padding: 12px;
+  background: #4361ee;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.suggestionsButton:hover {
+  background: #3651d4;
+}
+
+.suggestionContent {
+  background: white;
+  padding: 16px;
+  margin-top: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.exerciseContainer {
+  padding: 20px;
+}
+
+.exerciseCard {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.exerciseList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.exerciseItem {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.exerciseItem h4 {
+  color: #4361ee;
+  margin-bottom: 12px;
+}
+
+.exerciseItem ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.exerciseItem li {
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.exerciseItem li:last-child {
+  border-bottom: none;
+}
+
+.exerciseNote {
+  margin-top: 12px;
+  color: #64748b;
+  font-style: italic;
+} 

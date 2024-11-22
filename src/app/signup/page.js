@@ -56,7 +56,7 @@ export default function Signup() {
     
         if (Object.keys(newErrors).length === 0) {
             try {
-                const response = await fetch('https://glico-flow-api.onrender.com/api/users/signup', {
+                const response = await fetch('http://localhost:5000/api/users/signup', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

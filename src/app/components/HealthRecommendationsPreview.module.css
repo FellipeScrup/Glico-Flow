@@ -1,0 +1,66 @@
+.previewCard {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.previewCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.header h3 {
+  flex: 1;
+  margin: 0;
+  color: #1F2937;
+  font-size: 1.1rem;
+}
+
+.arrow {
+  color: #4361EE;
+  font-size: 14px;
+}
+
+.previewContent {
+  padding-top: 8px;
+}
+
+.exercisePreview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.exerciseIcon {
+  font-size: 20px;
+}
+
+.exerciseText {
+  flex: 1;
+}
+
+.exerciseText p {
+  margin: 0;
+  color: #4B5563;
+  font-weight: 500;
+}
+
+.exerciseText span {
+  font-size: 0.9rem;
+  color: #6B7280;
+} 
