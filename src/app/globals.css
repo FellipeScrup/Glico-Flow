@@ -123,9 +123,10 @@ a {
   text-decoration: none;
 }
 
+/* Remover estas propriedades que estão limitando o scroll */
 html, body {
-  height: 100%;
-  overflow-y: visible;
+  height: auto; /* alterado de 100% para auto */
+  overflow-y: auto;
   position: relative;
   -webkit-overflow-scrolling: touch;
 }
