@@ -4,8 +4,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,18 +15,18 @@
 }
 
 .container {
-  background: white;
+  background: rgba(255, 255, 255, 0.98);
   width: 100%;
   max-width: 400px;
-  border-radius: 24px;
+  border-radius: 28px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 40px rgba(67, 97, 238, 0.15);
   animation: slideUp 0.3s ease;
 }
 
 .header {
-  background: #4361EE;
-  padding: 20px;
+  background: linear-gradient(135deg, #4361EE, #4CC9F0);
+  padding: 16px 20px;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -35,12 +35,13 @@
 }
 
 .title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   margin: 0;
   text-align: center;
   width: 100%;
   padding: 0 30px;
+  letter-spacing: 0.2px;
 }
 
 .closeButton {
@@ -91,12 +92,13 @@
 .input, .select {
   width: 100%;
   padding: 14px 16px;
-  border: 2px solid #E5E7EB;
-  border-radius: 16px;
-  font-size: 16px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 14px;
+  font-size: 15px;
   color: #1F2937;
-  background: #F9FAFB;
+  background: rgba(249, 250, 251, 0.8);
   transition: all 0.2s ease;
+  height: 48px;
 }
 
 .input {
@@ -121,7 +123,7 @@
 .input:focus, .select:focus {
   border-color: #4361EE;
   background: white;
-  box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.1);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.08);
   outline: none;
 }
 
@@ -157,24 +159,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 24px;
+  gap: 10px;
+  padding: 16px 24px 24px;
 }
 
 .cancelButton, .saveButton {
   all: unset;
   width: 120px;
-  height: 44px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 500;
+  border-radius: 21px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   box-sizing: border-box;
   text-align: center;
+  background: #F3F4F6;
+  border: 1.5px solid #E5E7EB;
 }
 
 .cancelButton {
@@ -183,8 +187,19 @@
 }
 
 .saveButton {
-  background: #4361EE;
+  background: linear-gradient(135deg, #4361EE, #4CC9F0);
   color: white;
+  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+  background: linear-gradient(135deg, #4361EE, #4CC9F0);
+}
+
+.saveButton:active {
+  transform: translateY(0);
 }
 
 .buttonContainer button {
@@ -202,7 +217,7 @@
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;

@@ -1,27 +1,24 @@
 .page {
     background: linear-gradient(135deg, #F6F8FF 0%, #EDF0FF 100%);
-    min-height: 100vh;
-    padding: 8px;
+    height: 100vh;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     gap: 8px;
     box-sizing: border-box;
     position: relative;
-    height: auto;
-    overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
 }
 
 .header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 12px 16px;
+    border-radius: 16px;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 10px;
-    background: var(--card-bg);
-    border-radius: 16px;
-    margin-bottom: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .headerLeft {
@@ -55,15 +52,25 @@
 }
 
 .logoutButton {
-    background: #4361EE;
+    background: linear-gradient(135deg, #4361EE, #4CC9F0);
     color: white;
     border: none;
     padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+}
+
+.logoutButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+}
+
+.logoutButton:active {
+    transform: translateY(0);
 }
 
 .mainCard {
@@ -76,19 +83,17 @@
 }
 
 .glycemiaValue {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 4px;
-    margin-bottom: 4px;
+    text-align: center;
+    margin: 12px 0;
 }
 
 .glycemiaValue .number {
     font-size: 48px;
     font-weight: 700;
-    color: #4361EE;
+    background: linear-gradient(135deg, #4361EE, #4CC9F0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     display: inline-block;
-    animation: numberScale 0.5s ease-out;
 }
 
 .glycemiaValue .unit {
@@ -100,16 +105,19 @@
 .measurementTime {
     font-size: 12px;
     color: #6B7280;
-    margin: 4px 0;
+    margin: 2px 0;
 }
 
 .statusBadge {
     display: inline-block;
     padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 500;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #4ECB71;
     color: white;
+    box-shadow: 0 4px 12px rgba(78, 203, 113, 0.2);
+    margin: 4px 0;
 }
 
 .statsContainer {
@@ -146,10 +154,13 @@
 }
 
 .chartCard {
-    background: white;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 20px rgba(67, 97, 238, 0.08);
 }
 
 .chartCard h2 {
@@ -340,36 +351,31 @@
 } 
 
 .measurementCard {
-    background: var(--card-bg);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    margin-bottom: 6px;
-    
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 16px;
+    border: 1px solid rgba(67, 97, 238, 0.1);
+    box-shadow: 0 4px 20px rgba(67, 97, 238, 0.08);
 }
 
 .cardHeader {
-    width: 100%;
-    padding: 8px 12px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-primary);
-    border-radius: 20px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 8px;
+    padding: 8px 4px;
+    margin-bottom: 8px;
 }
 
-.cardHeader:hover {
-    background: var(--bg-secondary);
-    transform: translateY(-1px);
+.cardIcon {
+    color: #4361EE;
+    font-size: 18px;
 }
 
 .cardTitle {
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: -0.2px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1F2937;
 }
 
 .expandIcon {
@@ -401,34 +407,35 @@
 .statsGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    padding: 0 8px;
+    gap: 12px;
+    padding: 8px 4px;
 }
 
 .statCard {
-    background: var(--bg-secondary);
+    background: rgba(249, 250, 251, 0.8);
     padding: 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    border: 1px solid rgba(67, 97, 238, 0.08);
 }
 
 .statLabel {
     font-size: 13px;
-    color: var(--text-secondary);
+    color: #6B7280;
     margin-bottom: 4px;
 }
 
 .statValue {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
-    color: var(--text-primary);
-    margin: 4px 0;
+    color: #1F2937;
+    background: linear-gradient(135deg, #4361EE, #4CC9F0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .statUnit {
     font-size: 12px;
-    color: var(--text-secondary);
-    margin-top: 2px;
+    color: #6B7280;
 }
 
 @media (min-width: 768px) {
@@ -438,10 +445,13 @@
 }
 
 .goalsCard {
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
     border-radius: 20px;
-    border: 1px solid var(--border-color);
-    margin-bottom: 16px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 20px rgba(67, 97, 238, 0.08);
 }
 
 .goalsContent {
@@ -461,8 +471,8 @@
 .goalsGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    padding: 0 12px;
+    gap: 8px;
+    padding: 0 8px;
 }
 
 /* Reutiliza os estilos do header */
@@ -576,9 +586,9 @@
 .goalItem {
     display: flex;
     justify-content: space-between;
-    padding: 12px 4px;
+    padding: 8px 4px;
     color: #4B5563;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .goalItem:not(:last-child) {
@@ -928,34 +938,24 @@
 .primaryButton, .secondaryButton {
     flex: 1;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
+    font-weight: 600;
     border: none;
-    transition: background-color 0.2s ease;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .primaryButton {
-    background: #4361EE;
+    background: linear-gradient(135deg, #4361EE, #4CC9F0);
     color: white;
-}
-
-.primaryButton:hover {
-    background: #3651D4;
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
 }
 
 .secondaryButton {
-    background: #242526;
+    background: #1F2937;
     color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.secondaryButton:hover {
-    background: #2F3031;
+    box-shadow: 0 4px 12px rgba(31, 41, 55, 0.2);
 }
 
 .chartWrapper {
@@ -1274,9 +1274,53 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: var(--background);
-    padding: 16px;
-    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    display: flex;
+    gap: 8px;
     z-index: 1000;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes breathing {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(67, 97, 238, 0.08);
+  }
+  50% {
+    transform: scale(1.005);
+    box-shadow: 0 4px 24px rgba(67, 97, 238, 0.12);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(67, 97, 238, 0.08);
+  }
+}
+
+.recommendationCard {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 16px;
+  border: 1px solid rgba(67, 97, 238, 0.1);
+  box-shadow: 0 4px 20px rgba(67, 97, 238, 0.08);
+  animation: breathing 3s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.recommendationCard:hover {
+  animation-play-state: paused;
+  transform: scale(1.01);
+  box-shadow: 0 6px 28px rgba(67, 97, 238, 0.15);
+}
+
+.recommendationIcon {
+  color: #4361EE;
+  font-size: 18px;
+}
+
+.recommendationTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1F2937;
 }
