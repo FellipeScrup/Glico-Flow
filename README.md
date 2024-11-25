@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+
+
+```markdown
+# Glico Flow 🩺
+
+![GitHub repo size](https://img.shields.io/github/repo-size/FellipeScrup/Glico-Flow)
+![GitHub language count](https://img.shields.io/github/languages/count/FellipeScrup/Glico-Flow)
+![GitHub top language](https://img.shields.io/github/languages/top/FellipeScrup/Glico-Flow)
+
+Um aplicativo web moderno para monitoramento e controle de glicemia, desenvolvido com foco em pessoas com diabetes.
+
+## 🌟 Funcionalidades
+
+- 📊 Dashboard interativo com métricas importantes
+- 📝 Registro de medições de glicemia
+- 🎯 Definição de metas personalizadas
+- ⚠️ Alertas de hipo/hiperglicemia
+- 💪 Recomendações de saúde personalizadas
+- 🍽️ Sugestões nutricionais
+- 🏃‍♂️ Recomendações de exercícios
+
+## 🛠️ Tecnologias
+
+- Next.js 13
+- React
+- CSS Modules
+- API RESTful
+- Animações CSS
+- Design Responsivo
+
+## 🎨 Design
+
+- Interface moderna e intuitiva
+- Feedback visual através de animações suaves
+- Design adaptativo para diferentes dispositivos
+- Paleta de cores consistente
+- Elementos visuais informativos
+
+## 📱 Responsividade
+
+O aplicativo é totalmente responsivo:
+- Desktop
+- Tablet
+- Mobile
+- Diferentes tamanhos de tela
+
+## ⚙️ Instalação
 
 ```bash
+# Clone o repositório
+git clone https://github.com/FellipeScrup/Glico-Flow.git
+
+# Entre no diretório
+cd Glico-Flow
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🤝 Contribuidores
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/FellipeScrup">
+        <img src="https://github.com/FellipeScrup.png" width="100px;" alt="Foto do Fellipe"/><br>
+        <sub>
+          <b>Fellipe Scrup</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Jvzinnho">
+        <img src="https://github.com/Jvzinnho.png" width="100px;" alt="Foto do Jvzinho"/><br>
+        <sub>
+          <b>Jvzinho</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📝 Licença
 
-## Learn More
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
-To learn more about Next.js, take a look at the following resources:
+## 🌟 Features Planejadas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [ ] Modo escuro
+- [ ] Exportação de dados
+- [ ] Gráficos avançados
+- [ ] Integração com dispositivos
+- [ ] Lembretes personalizados
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📞 Contato
 
-## Deploy on Vercel
+Se você tiver alguma dúvida ou sugestão, não hesite em entrar em contato:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[![Github Badge](https://img.shields.io/badge/-Github-000?style=flat-square&logo=Github&logoColor=white&link=https://github.com/FellipeScrup)](https://github.com/FellipeScrup)
+[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/fellipe-scruph/)](https://www.linkedin.com/in/fellipe-scruph/)
+[![Gmail Badge](https://img.shields.io/badge/-Gmail-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:fellipescruph@gmail.com)](mailto:fellipescruph@gmail.com)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Desenvolvido com 💙 por Fellipe Scrup e Jvzinho
+```
+
+
+Adicionei o badge do LinkedIn mantendo o estilo visual consistente com os outros badges. Agora o README tem três formas de contato: Github, LinkedIn e Gmail.
