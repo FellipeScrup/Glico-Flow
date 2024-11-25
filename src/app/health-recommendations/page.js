@@ -14,7 +14,7 @@ export default function HealthRecommendations() {
     glycemiaGoals: null
   });
   const [recommendations, setRecommendations] = useState({
-    exercise: null,
+    exercise: [],
     nutrition: null
   });
 
@@ -30,6 +30,16 @@ export default function HealthRecommendations() {
         return;
       }
 
+      // Buscar perfil do usuário
+      const profileResponse = await fetch('https://glico-flow-api.onrender.com/api/users/profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!profileResponse.ok) throw new Error('Falha ao carregar perfil');
+      const profile = await profileResponse.json();
+
       // Buscar medições
       const measurementsResponse = await fetch('https://glico-flow-api.onrender.com/api/measurements', {
         headers: {
@@ -39,16 +49,6 @@ export default function HealthRecommendations() {
 
       if (!measurementsResponse.ok) throw new Error('Falha ao carregar medições');
       const measurements = await measurementsResponse.json();
-      
-      // Buscar perfil e metas do usuário
-      const profileResponse = await fetch('https://glico-flow-api.onrender.com/api/users/profile', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (!profileResponse.ok) throw new Error('Falha ao carregar perfil');
-      const profile = await profileResponse.json();
 
       // Buscar metas específicas
       const goalsResponse = await fetch('https://glico-flow-api.onrender.com/api/users/goals', {
@@ -65,25 +65,19 @@ export default function HealthRecommendations() {
         glycemiaGoals: goals
       });
 
-      // Atualizar recomendações baseadas nos dados
+      // Atualizar recomendações baseadas nos dados completos do usuário
       const exerciseRecs = getExerciseRecommendations({
-        ...profile,
+        ...profile, // Agora inclui o gênero do usuário
         glycemiaGoals: goals,
         lastMeasurement: measurements[0]
-      });
+      }, measurements[0]?.glycemiaValue);
 
-      const nutritionRecs = getNutritionalRecommendations({
-        ...profile,
-        glycemiaGoals: goals,
-        lastMeasurement: measurements[0]
-      });
+      setRecommendations(prev => ({
+        ...prev,
+        exercise: exerciseRecs
+      }));
 
-      setRecommendations({
-        exercise: exerciseRecs,
-        nutrition: nutritionRecs
-      });
-
-      setUserData(profile);
+      setUserData(profile); // Armazena todos os dados do perfil, incluindo o gênero
 
     } catch (error) {
       console.error('Erro ao carregar dados:', error);
@@ -162,14 +156,26 @@ export default function HealthRecommendations() {
     const status = getGlycemiaStatus(glycemia);
     const age = userData?.age || 30;
     const imc = userData ? (userData.weight / Math.pow(userData.height / 100, 2)).toFixed(1) : 25;
+    const gender = userData?.gender || 'Male'; // Usa o gênero do perfil
+    const diabetesType = userData?.diabetesType || 'type2';
+    
+    // Função auxiliar para determinar intensidade baseada no perfil
+    const getIntensityLevel = () => {
+      if (age > 60) return 'Leve a Moderada';
+      if (imc > 30) return 'Leve, progredindo gradualmente';
+      if (diabetesType === 'type1') return 'Moderada com monitoramento frequente';
+      return 'Moderada a Alta';
+    };
 
+    // Verifica contraindicações
     if (status === 'low') {
       return [{
         title: '⚠️ Exercícios Contraindicados',
         description: 'Não realize atividades físicas neste momento',
+        warning: `Glicemia atual: ${glycemia} mg/dL - Muito Baixa`,
         instructions: [
-          'Interrompa qualquer atividade física',
-          'Sente-se ou deite-se para evitar quedas',
+          'Interrompa qualquer atividade física imediatamente',
+          'Consuma 15g de carboidrato de rápida absorção',
           'Aguarde a normalização da glicemia (> 100 mg/dL)',
           'Só retome após 30 minutos da correção'
         ]
@@ -178,53 +184,455 @@ export default function HealthRecommendations() {
 
     if (status === 'high') {
       return [{
-        title: '🚶‍♂️ Caminhada Leve',
-        duration: '10-15 minutos',
-        intensity: 'Muito leve',
-        warning: 'Apenas após aplicação de insulina',
-        notes: 'Mantenha-se hidratado'
-      },
-      {
-        title: '🧘‍♂️ Exercícios Respiratórios',
-        duration: '5-10 minutos',
-        intensity: 'Leve',
-        frequency: 'A cada 2 horas',
-        notes: 'Ajuda a reduzir o estresse e a glicemia'
+        title: '⚠️ Atenção - Glicemia Elevada',
+        warning: `Glicemia atual: ${glycemia} mg/dL - Alta`,
+        recommendations: [
+          {
+            title: '🚶‍♂️ Caminhada Leve',
+            duration: '10-15 minutos',
+            intensity: 'Muito leve',
+            warning: 'Apenas após verificar cetonas e aplicar insulina se necessário',
+            notes: 'Mantenha-se bem hidratado'
+          },
+          {
+            title: '🧘‍♂️ Exercícios de Relaxamento',
+            duration: '5-10 minutos',
+            type: 'Respiração e alongamento leve',
+            frequency: 'A cada 2 horas',
+            notes: 'Ajuda a reduzir o estresse e a glicemia'
+          }
+        ]
       }];
     }
 
-    // Recomendações normais baseadas no perfil
+    // Recomendações personalizadas baseadas no perfil
+    const baseIntensity = getIntensityLevel();
     const recommendations = [];
-    
-    // Exercício Aeróbico Principal
-    recommendations.push({
-      title: '🏃‍♂️ Aeróbico Principal',
-      type: age < 40 ? 'Corrida' : 'Caminhada',
-      duration: age < 50 ? '45-60 minutos' : '30-45 minutos',
-      intensity: age < 45 ? 'Moderada-Alta' : 'Moderada',
-      frequency: '4-5x por semana',
-      notes: imc > 30 ? 'Comece devagar e aumente gradualmente' : 'Mantenha ritmo constante'
-    });
 
-    // Exercício Complementar
-    recommendations.push({
-      title: '🏊‍♂️ Atividade Complementar',
-      type: imc > 30 ? 'Natação ou Hidroginástica' : 'Ciclismo ou Dança',
-      duration: '30-40 minutos',
-      intensity: 'Moderada',
-      frequency: '2-3x por semana',
-      notes: 'Alterne com o exercício principal'
-    });
+    // Exercícios Cardiovasculares
+    const cardioRec = {
+      title: '🫀 Exercícios Cardiovasculares',
+      description: `Atividades aeróbicas adaptadas ao perfil ${gender === 'Female' ? 'feminino' : 'masculino'}`,
+      frequency: diabetesType === 'type1' ? '3-4x por semana' : '4-5x por semana',
+      options: []
+    };
 
-    // Musculação/Força
-    recommendations.push({
+    // Definir opções baseadas no gênero
+    if (gender === 'Female') {
+      if (imc <= 25) {
+        cardioRec.options.push(
+          {
+            type: '💃 Dança',
+            duration: '30-45 minutos',
+            intensity: baseIntensity
+          },
+          {
+            type: '🚴‍♀️ Spinning',
+            duration: '30-40 minutos',
+            intensity: baseIntensity
+          }
+        );
+      } else {
+        cardioRec.options.push(
+          {
+            type: '🏊‍♀️ Hidroginástica',
+            duration: '45 minutos',
+            intensity: 'Leve a Moderada'
+          },
+          {
+            type: '🚶‍♀️ Caminhada',
+            duration: '30 minutos',
+            intensity: 'Leve, aumentando gradualmente'
+          }
+        );
+      }
+    } else {
+      if (imc <= 25) {
+        cardioRec.options.push(
+          {
+            type: '🏃‍♂️ Corrida',
+            duration: '30-45 minutos',
+            intensity: baseIntensity
+          },
+          {
+            type: '🚴‍♂️ Ciclismo',
+            duration: '45-60 minutos',
+            intensity: baseIntensity
+          }
+        );
+      } else {
+        cardioRec.options.push(
+          {
+            type: '🚶‍♂️ Caminhada',
+            duration: '45 minutos',
+            intensity: 'Leve, aumentando gradualmente'
+          },
+          {
+            type: '🏊‍♂️ Natação',
+            duration: '30 minutos',
+            intensity: 'Leve a Moderada'
+          }
+        );
+      }
+    }
+
+    recommendations.push(cardioRec);
+
+    // Treino de Força específico por gênero
+    const strengthRec = {
       title: '💪 Treino de Força',
-      type: 'Musculação',
-      duration: '40-50 minutos',
-      intensity: age < 50 ? 'Moderada' : 'Leve a Moderada',
-      frequency: '3x por semana',
-      notes: 'Intercale com exercícios aeróbicos'
-    });
+      description: `Fortalecimento muscular adaptado ao perfil ${gender === 'Female' ? 'feminino' : 'masculino'}`,
+      frequency: gender === 'Female' ? '3-4x por semana' : '4-5x por semana'
+    };
+
+    if (gender === 'Female') {
+      strengthRec.exercises = [
+        {
+          type: 'Musculação com pesos',
+          sets: '3-4 séries',
+          reps: '8-12 repetições',
+          intensity: 'Leve, progredindo gradualmente',
+          rest: '60-90 segundos entre séries',
+          focus: [
+            'Fortalecimento de membros inferiores',
+            'Exercícios para core e postura',
+            'Fortalecimento do assoalho pélvico'
+          ],
+          exercises: [
+            'Agachamento',
+            'Leg Press',
+            'Cadeira Extensora',
+            'Cadeira Flexora',
+            'Elevação Pélvica',
+            'Abdominais',
+            'Exercícios para costas'
+          ]
+        }
+      ];
+    } else {
+      strengthRec.exercises = [
+        {
+          type: 'Musculação com pesos',
+          sets: '3-4 séries',
+          reps: age > 50 ? '12-15 repetições' : '8-12 repetições',
+          intensity: baseIntensity,
+          rest: '90-120 segundos entre séries',
+          focus: [
+            'Desenvolvimento de força muscular',
+            'Hipertrofia muscular',
+            'Fortalecimento do core',
+            'Estabilidade articular'
+          ],
+          exercises: [
+            {
+              name: 'Treino A - Superior',
+              exercises: [
+                'Supino reto com barra',
+                'Puxada frontal',
+                'Desenvolvimento de ombros',
+                'Remada curvada',
+                'Extensão triceps na polia',
+                'Rosca direta com barra'
+              ]
+            },
+            {
+              name: 'Treino B - Inferior',
+              exercises: [
+                'Agachamento livre',
+                'Leg press 45°',
+                'Cadeira extensora',
+                'Mesa flexora',
+                'Panturrilha em pé',
+                'Abdominais'
+              ]
+            }
+          ],
+          notes: [
+            'Alternar entre treino A e B',
+            'Aumentar carga progressivamente',
+            'Manter forma correta dos exercícios',
+            'Hidratação constante durante treino'
+          ]
+        }
+      ];
+    }
+
+    recommendations.push(strengthRec);
+
+    // Flexibilidade e Equilíbrio específico por gênero
+    const flexibilityRec = {
+      title: gender === 'Female' ? '🧘‍♀️ Flexibilidade e Bem-estar' : '🧘‍♂️ Flexibilidade e Equilíbrio',
+      description: gender === 'Female' ? 
+        'Exercícios complementares focados no público feminino' : 
+        'Exercícios complementares focados no público masculino',
+      frequency: '2-3x por semana'
+    };
+
+    if (gender === 'Female') {
+      flexibilityRec.activities = [
+        {
+          type: 'Yoga Flow',
+          duration: '30-45 minutos',
+          benefits: [
+            'Melhora da flexibilidade',
+            'Redução do estresse',
+            'Fortalecimento do core',
+            'Equilíbrio hormonal'
+          ]
+        },
+        {
+          type: 'Pilates',
+          duration: '45-60 minutos',
+          benefits: [
+            'Fortalecimento do core',
+            'Melhora da postura',
+            'Controle respiratório'
+          ]
+        },
+        {
+          type: 'Alongamentos',
+          duration: '10-15 minutos',
+          timing: 'Após exercícios principais',
+          focus: [
+            'Membros inferiores',
+            'Região lombar',
+            'Ombros e pescoço'
+          ]
+        }
+      ];
+    } else {
+      flexibilityRec.activities = [
+        {
+          type: 'Yoga para Atletas',
+          duration: '30-40 minutos',
+          benefits: [
+            'Melhora da flexibilidade muscular',
+            'Prevenção de lesões',
+            'Recuperação muscular',
+            'Equilíbrio corporal'
+          ],
+          recommended: [
+            'Power Yoga',
+            'Yoga para Esportistas',
+            'Posturas de força e equilíbrio'
+          ]
+        },
+        {
+          type: 'Alongamento Dinâmico',
+          duration: '15-20 minutos',
+          timing: 'Antes dos exercícios principais',
+          focus: [
+            'Mobilidade articular',
+            'Preparação muscular',
+            'Aquecimento progressivo'
+          ]
+        },
+        {
+          type: 'Alongamento Estático',
+          duration: '10-15 minutos',
+          timing: 'Após exercícios principais',
+          focus: [
+            'Grandes grupos musculares',
+            'Redução da tensão muscular',
+            'Melhora da recuperação'
+          ],
+          areas: [
+            'Peitoral e ombros',
+            'Costas',
+            'Quadríceps e posteriores',
+            'Core'
+          ]
+        }
+      ];
+
+      // Adiciona recomendações específicas para mobilidade
+      flexibilityRec.mobilityWork = {
+        type: 'Trabalho de Mobilidade',
+        frequency: '2x por semana',
+        duration: '15-20 minutos',
+        exercises: [
+          'Mobilidade de quadril',
+          'Mobilidade escapular',
+          'Mobilidade de tornozelo',
+          'Exercícios com foam roller'
+        ],
+        benefits: [
+          'Melhora da amplitude de movimento',
+          'Prevenção de lesões',
+          'Otimização do desempenho nos exercícios'
+        ]
+      };
+    }
+
+    recommendations.push(flexibilityRec);
+
+    if (gender === 'Male') {
+      recommendations.push({
+        title: '🔄 Recuperação e Regeneração',
+        description: 'Estratégias para otimizar a recuperação muscular',
+        frequency: 'Conforme necessário',
+        activities: [
+          {
+            type: 'Descanso Ativo',
+            duration: '20-30 minutos',
+            options: [
+              'Caminhada leve',
+              'Natação recreativa',
+              'Ciclismo leve'
+            ]
+          },
+          {
+            type: 'Técnicas de Recuperação',
+            duration: '15-20 minutos',
+            techniques: [
+              'Contraste térmico (água quente/fria)',
+              'Auto-massagem com foam roller',
+              'Alongamentos suaves',
+              'Compressão muscular',
+              'Meditação e técnicas respiratórias'
+            ],
+            recommendations: [
+              'Aplique gelo em áreas inflamadas por 15-20 minutos',
+              'Use o foam roller por 30-60 segundos em cada grupo muscular',
+              'Faça sessões de contraste: 2 min quente / 30s frio',
+              'Pratique técnicas de respiração profunda'
+            ],
+            notes: [
+              'Realize após treinos intensos',
+              'Adapte as técnicas conforme sua resposta',
+              'Mantenha boa hidratação durante o processo',
+              'Monitore sinais de desconforto excessivo'
+            ]
+          }
+        ],
+        generalTips: [
+          'Mantenha uma boa hidratação',
+          'Garanta 7-8 horas de sono por noite',
+          'Mantenha uma alimentação balanceada',
+          'Monitore seus níveis de energia'
+        ]
+      });
+    }
+    if (gender === 'Female') {
+      recommendations.push({
+        title: '🔄 Recuperação e Regeneração',
+        description: 'Estratégias para otimizar a recuperação muscular feminina',
+        frequency: 'Conforme necessário',
+        activities: [
+          {
+            type: 'Descanso Ativo',
+            duration: '20-30 minutos',
+            techniques: [
+              'Caminhada leve ao ar livre',
+              'Yoga restaurativa',
+              'Hidroginástica leve',
+              'Alongamentos suaves'
+            ],
+            recommendations: [
+              'Escolha atividades de baixo impacto',
+              'Mantenha-se hidratada durante as atividades',
+              'Pratique em ambiente relaxante',
+              'Respeite os sinais do seu corpo'
+            ]
+          },
+          {
+            type: 'Técnicas de Recuperação',
+            duration: '15-20 minutos',
+            techniques: [
+              'Contraste térmico suave (água morna/fria)',
+              'Automassagem com foam roller',
+              'Técnicas de respiração profunda',
+              'Meditação guiada',
+              'Liberação miofascial',
+              'Exercícios de mobilidade pélvica'
+            ],
+            recommendations: [
+              'Aplique compressa morna em áreas tensas por 10-15 minutos',
+              'Use o foam roller com pressão moderada',
+              'Faça sessões de contraste: 2 min morno / 30s frio',
+              'Pratique respiração diafragmática',
+              'Dê atenção especial à região lombar e quadril'
+            ],
+            notes: [
+              'Ajuste as técnicas durante o ciclo menstrual',
+              'Evite pressão excessiva em períodos sensíveis',
+              'Mantenha consistência nas práticas de recuperação',
+              'Observe padrões de tensão corporal'
+            ]
+          },
+          {
+            type: 'Relaxamento e Bem-estar',
+            duration: '20-30 minutos',
+            techniques: [
+              'Banho de imersão com sais',
+              'Aromaterapia relaxante',
+              'Alongamentos suaves',
+              'Técnicas de mindfulness',
+              'Exercícios de respiração calmante'
+            ],
+            recommendations: [
+              'Crie um ambiente tranquilo e acolhedor',
+              'Use óleos essenciais relaxantes (lavanda, camomila)',
+              'Mantenha temperatura agradável durante as práticas',
+              'Combine com música suave se desejar'
+            ],
+            benefits: [
+              'Redução do estresse',
+              'Melhora da qualidade do sono',
+              'Equilíbrio hormonal',
+              'Recuperação muscular otimizada',
+              'Bem-estar emocional'
+            ]
+          }
+        ],
+        generalTips: [
+          'Mantenha uma rotina regular de sono (7-8 horas)',
+          'Hidrate-se adequadamente ao longo do dia',
+          'Observe sinais de fadiga excessiva',
+          'Adapte a intensidade conforme seu ciclo hormonal',
+          'Priorize alimentação balanceada e nutritiva',
+          'Inclua períodos de descanso entre treinos intensos'
+        ],
+        hormonalConsiderations: {
+          title: 'Considerações Hormonais',
+          recommendations: [
+            'Ajuste a intensidade das técnicas de recuperação conforme a fase do ciclo',
+            'Aumente o foco em relaxamento durante a fase pré-menstrual',
+            'Priorize técnicas suaves durante o período menstrual',
+            'Observe padrões de retenção de líquidos e adapte as práticas'
+          ]
+        },
+        specialFocus: {
+          title: 'Áreas de Atenção Especial',
+          areas: [
+            {
+              region: 'Região Pélvica',
+              techniques: [
+                'Exercícios de mobilidade suave',
+                'Alongamentos específicos',
+                'Relaxamento do assoalho pélvico'
+              ]
+            },
+            {
+              region: 'Membros Inferiores',
+              techniques: [
+                'Drenagem linfática natural',
+                'Elevação das pernas',
+                'Massagem suave'
+              ]
+            },
+            {
+              region: 'Região Lombar',
+              techniques: [
+                'Alongamentos específicos',
+                'Liberação miofascial suave',
+                'Exercícios de estabilização'
+              ]
+            }
+          ]
+        }
+      });
+    }
 
     return recommendations;
   };
@@ -483,6 +891,138 @@ export default function HealthRecommendations() {
   };
 
   const renderContent = () => {
+    if (activeTab === 'exercise') {
+      return (
+        <div className={styles.recommendationsContainer}>
+          {recommendations.exercise.map((rec, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className={styles.exerciseCard}
+            >
+              <h3>{rec.title}</h3>
+              <p>{rec.description}</p>
+              <p><strong>Frequência:</strong> {rec.frequency}</p>
+
+              {rec.warning && (
+                <div className={styles.warningBox}>
+                  <p>{rec.warning}</p>
+                </div>
+              )}
+
+              {/* Opções de exercícios */}
+              {rec.options && (
+                <div className={styles.exerciseOptions}>
+                  {rec.options.map((option, i) => (
+                    <div key={i} className={styles.exerciseOption}>
+                      <h4>{option.type}</h4>
+                      <p>Duração: {option.duration}</p>
+                      <p>Intensidade: {option.intensity}</p>
+                      
+                      {option.techniques && (
+                        <div className={styles.techniquesList}>
+                          <h4>Técnicas:</h4>
+                          <ul>
+                            {option.techniques.map((technique, idx) => (
+                              <li key={idx}>{technique}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      {option.recommendations && (
+                        <div className={styles.recommendationsList}>
+                          <h4>Recomendações:</h4>
+                          <ul>
+                            {option.recommendations.map((rec, idx) => (
+                              <li key={idx}>{rec}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Detalhes dos exercícios */}
+              {rec.exercises && (
+                <div className={styles.exerciseDetails}>
+                  {rec.exercises.map((ex, i) => (
+                    <div key={i} className={styles.exerciseDetail}>
+                      <h4>{ex.type}</h4>
+                      <p>Séries: {ex.sets}</p>
+                      <p>Repetições: {ex.reps}</p>
+                      <p>Intensidade: {ex.intensity}</p>
+                      <p>Descanso: {ex.rest}</p>
+                      
+                      {ex.techniques && (
+                        <div className={styles.techniquesList}>
+                          <h4>Técnicas:</h4>
+                          <ul>
+                            {ex.techniques.map((technique, idx) => (
+                              <li key={idx}>{technique}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      {ex.recommendations && (
+                        <div className={styles.recommendationsList}>
+                          <h4>Recomendações:</h4>
+                          <ul>
+                            {ex.recommendations.map((rec, idx) => (
+                              <li key={idx}>{rec}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Atividades */}
+              {rec.activities && (
+                <div className={styles.activities}>
+                  {rec.activities.map((activity, i) => (
+                    <div key={i} className={styles.activity}>
+                      <h4>{activity.type}</h4>
+                      <p>Duração: {activity.duration}</p>
+                      {activity.timing && <p>Momento: {activity.timing}</p>}
+                      
+                      {activity.techniques && (
+                        <div className={styles.techniquesList}>
+                          <h4>Técnicas:</h4>
+                          <ul>
+                            {activity.techniques.map((technique, idx) => (
+                              <li key={idx}>{technique}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      {activity.recommendations && (
+                        <div className={styles.recommendationsList}>
+                          <h4>Recomendações:</h4>
+                          <ul>
+                            {activity.recommendations.map((rec, idx) => (
+                              <li key={idx}>{rec}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      );
+    }
     if (activeTab === 'nutrition') {
         const meals = [
             {
@@ -558,7 +1098,7 @@ export default function HealthRecommendations() {
                             "2 litros de água fervente",
                             "1 colher de alho picado",
                             "1 colher de gengibre ralado",
-                            "Sal, pimenta do moinho"
+                            "Sal, pimenta e noz moscada a gosto"
 
 
                         ],
@@ -709,62 +1249,6 @@ export default function HealthRecommendations() {
         </div>
       );
     }
-    if (activeTab === 'exercise') {
-        return (
-          <div className={styles.exerciseContainer}>
-            <div className={styles.exerciseCard}>
-              <h3>Exercícios Recomendados</h3>
-              <div className={styles.exerciseList}>
-                <div className={styles.exerciseItem}>
-                  <h4>🏃‍♂️ Aeróbicos</h4>
-                  <ul>
-                    <li>Caminhada: 30 minutos, 3-4 vezes por semana</li>
-                    <li>Natação: 30 minutos, 2-3 vezes por semana</li>
-                    <li>Ciclismo: 20-30 minutos, 2-3 vezes por semana</li>
-                  </ul>
-                  <p className={styles.exerciseNote}>
-                    Mantenha intensidade moderada, com frequência cardíaca entre 50-70% da máxima
-                  </p>
-                </div>
-    
-                <div className={styles.exerciseItem}>
-                  <h4>💪 Musculação</h4>
-                  <ul>
-                    <li>2-3 vezes por semana</li>
-                    <li>8-12 repetições por exercício</li>
-                    <li>2-3 séries por exercício</li>
-                    <li>Intervalo: 60-90 segundos entre séries</li>
-                  </ul>
-                  <p className={styles.exerciseNote}>
-                    Alterne entre membros superiores e inferiores
-                  </p>
-                </div>
-    
-                <div className={styles.exerciseItem}>
-                  <h4>⚠️ Recomendações Gerais</h4>
-                  <ul>
-                    <li>Monitore a glicemia antes e depois dos exercícios</li>
-                    <li>Tenha sempre um carboidrato rápido disponível</li>
-                    <li>Hidrate-se adequadamente</li>
-                    <li>Use roupas e calçados apropriados</li>
-                  </ul>
-                </div>
-    
-                <div className={styles.exerciseItem}>
-                  <h4>🎯 Cuidados Importantes</h4>
-                  <ul>
-                    <li>Evite exercícios em jejum</li>
-                    <li>Pare imediatamente se sentir tontura ou mal-estar</li>
-                    <li>Prefira exercitar-se acompanhado</li>
-                    <li>Mantenha um registro das atividades e resposta glicêmica</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      }
-    // ... resto do código para a aba de exercícios
   };
 
   const renderMealSuggestions = (mealTime) => {
@@ -876,6 +1360,77 @@ export default function HealthRecommendations() {
     );
   };
 
+  const renderRecoveryTechniques = (recovery) => {
+    return (
+      <div className={styles.recoveryCard}>
+        {recovery.activities.map((activity, index) => (
+          <div key={index} className={styles.techniqueSection}>
+            <h3>{activity.type}</h3>
+            
+            {activity.duration && (
+              <p className={styles.duration}>Duração: {activity.duration}</p>
+            )}
+
+            {activity.options && (
+              <div className={styles.optionsList}>
+                <h4>Opções:</h4>
+                <ul>
+                  {activity.options.map((option, idx) => (
+                    <li key={idx}>{option}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {activity.techniques && (
+              <div className={styles.techniquesList}>
+                <h4>Técnicas:</h4>
+                <ul>
+                  {activity.techniques.map((technique, idx) => (
+                    <li key={idx}>{technique}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {activity.recommendations && (
+              <div className={styles.recommendationsList}>
+                <h4>Recomendações:</h4>
+                <ul>
+                  {activity.recommendations.map((rec, idx) => (
+                    <li key={idx}>{rec}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {activity.notes && (
+              <div className={styles.notesList}>
+                <h4>Observações:</h4>
+                <ul>
+                  {activity.notes.map((note, idx) => (
+                    <li key={idx}>{note}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        ))}
+
+        {recovery.generalTips && (
+          <div className={styles.generalTips}>
+            <h4>Dicas Gerais:</h4>
+            <ul>
+              {recovery.generalTips.map((tip, idx) => (
+                <li key={idx}>{tip}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className={styles.pageContainer}>
       <motion.div className={styles.headerGlass}>
@@ -903,6 +1458,22 @@ export default function HealthRecommendations() {
             <p>
               {glycemiaData.glycemiaGoals ? 
                 `${glycemiaData.glycemiaGoals.targetMin}-${glycemiaData.glycemiaGoals.targetMax} mg/dL` : 
+                'Carregando...'}
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className={styles.statusCard}
+        >
+          <div className={styles.statusIcon}>⚖️</div>
+          <div className={styles.statusInfo}>
+            <h3>IMC</h3>
+            <p>
+              {userData ? 
+                `${(userData.weight / Math.pow(userData.height / 100, 2)).toFixed(1)}` : 
                 'Carregando...'}
             </p>
           </div>
