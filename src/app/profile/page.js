@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './profile.module.css';
-import { useTheme } from '@/contexts/ThemeContext';
 import Image from 'next/image';
 
 export default function Profile() {
@@ -23,8 +22,6 @@ export default function Profile() {
 
     const [editedData, setEditedData] = useState({});
     const [error, setError] = useState('');
-
-    const { isDark, toggleTheme } = useTheme();
 
     useEffect(() => {
         fetchUserProfile();
@@ -96,6 +93,27 @@ export default function Profile() {
         setIsEditing(false);
         setEditedData({});
         setError('');
+    };
+
+    // Função para traduzir o gênero
+    const translateGender = (gender) => {
+        const genderMap = {
+            'Male': 'Masculino',
+            'Female': 'Feminino',
+            'Other': 'Outro'
+        };
+        return genderMap[gender] || gender;
+    };
+
+    // Função para traduzir o tipo de diabetes
+    const translateDiabetesType = (type) => {
+        const diabetesMap = {
+            'type1': 'Tipo 1',
+            'type2': 'Tipo 2',
+            'gestational': 'Gestacional',
+            'pre': 'Pré-diabetes'
+        };
+        return diabetesMap[type] || type;
     };
 
     return (
@@ -189,7 +207,7 @@ export default function Profile() {
                                 ) : (
                                     <input
                                         type="text"
-                                        value={userData.gender}
+                                        value={translateGender(userData.gender)}
                                         className={styles.input}
                                         readOnly
                                     />
@@ -246,7 +264,7 @@ export default function Profile() {
                                 ) : (
                                     <input
                                         type="text"
-                                        value={userData.diabetesType}
+                                        value={translateDiabetesType(userData.diabetesType)}
                                         className={styles.input}
                                         readOnly
                                     />
@@ -255,20 +273,6 @@ export default function Profile() {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div className={styles.themeToggle}>
-                <label className={styles.switch}>
-                    <input
-                        type="checkbox"
-                        checked={isDark}
-                        onChange={toggleTheme}
-                    />
-                    <span className={styles.slider}></span>
-                    <span className={styles.label}>
-                        {isDark ? 'Tema Escuro' : 'Tema Claro'}
-                    </span>
-                </label>
             </div>
         </div>
     );
