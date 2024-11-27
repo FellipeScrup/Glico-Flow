@@ -268,7 +268,7 @@ export default function ReportDialog({ onClose }) {
       const endDateISO = new Date(endDateTime.getTime() - (endDateTime.getTimezoneOffset() * 60000)).toISOString();
 
       const response = await fetch(
-        `http://localhost:5000/api/reports?startDate=${startDateISO}&endDate=${endDateISO}`,
+        `https://glico-flow-api.onrender.com/api/reports?startDate=${startDateISO}&endDate=${endDateISO}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,

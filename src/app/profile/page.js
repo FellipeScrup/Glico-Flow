@@ -35,7 +35,7 @@ export default function Profile() {
                 return;
             }
 
-            const response = await fetch('http://localhost:5000/api/users/profile', {
+            const response = await fetch('https://glico-flow-api.onrender.com/api/users/profile', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -68,7 +68,7 @@ export default function Profile() {
     const handleSave = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/users/update', {
+            const response = await fetch('https://glico-flow-api.onrender.com/api/users/update', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
