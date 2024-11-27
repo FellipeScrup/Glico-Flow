@@ -939,9 +939,50 @@
 
 .exerciseCard {
   background: white;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E5E7EB;
+  width: 100%;
+}
+
+.exerciseType {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #4361EE;
+  margin-bottom: 12px;
+}
+
+.exerciseDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.exerciseDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #4B5563;
+  font-size: 0.95rem;
+}
+
+.detailRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.detailLabel {
+  font-weight: 500;
+  min-width: 100px;
+}
+
+.detailValue {
+  color: #6B7280;
 }
 
 .exerciseList {

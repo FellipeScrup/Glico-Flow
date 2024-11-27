@@ -36,12 +36,15 @@
 }
 
 .dateInputs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 16px;
 }
 
 .inputGroup {
+  flex: 1;
+  min-width: 150px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -135,10 +138,14 @@
   box-shadow: 0 6px 16px rgba(67, 97, 238, 0.3);
 }
 
-.exportButton:disabled,
-.cancelButton:disabled {
+.exportButton:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.cancelButton:hover,
+.exportButton:hover {
+  opacity: 0.9;
 }
 
 .actions button:not(.exportButton) {

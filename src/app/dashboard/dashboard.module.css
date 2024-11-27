@@ -1324,3 +1324,40 @@
   font-weight: 600;
   color: #1F2937;
 }
+
+.exportContainer {
+    text-align: center;
+}
+
+.exportLink {
+    color: #4361EE;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.exportButton {
+    margin-top: 16px;
+    background: linear-gradient(135deg, #4361EE, #4CC9F0);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+}
+
+.exportButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(67, 97, 238, 0.3);
+}
+
+.exportButton:active {
+    transform: translateY(0);
+}

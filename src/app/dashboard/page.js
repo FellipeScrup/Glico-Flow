@@ -577,6 +577,15 @@ export default function Dashboard() {
                         <span className={`${styles.arrow} ${isChartOpen ? styles.expanded : ''}`}>▼</span>
                     </div>
                 </div>
+
+                {isChartOpen && (
+                    <button 
+                        onClick={() => setShowReportDialog(true)}
+                        className={styles.exportButton}
+                    >
+                        📊 Exportar Relatório
+                    </button>
+                )}
                 
                 <div className={`${styles.chartContent} ${isChartOpen ? styles.expanded : ''}`}>
                     <div className={styles.chartContainer}>
@@ -637,13 +646,6 @@ export default function Dashboard() {
                     className={`${styles.secondaryButton} ${styles.modernSecondary}`}
                 >
                     ⚡ Definir Metas
-                </button>
-
-                <button 
-                    onClick={() => setShowReportDialog(true)}
-                    className={`${styles.secondaryButton} ${styles.modernSecondary}`}
-                >
-                    📊 Exportar Relatório
                 </button>
             </div>
 
