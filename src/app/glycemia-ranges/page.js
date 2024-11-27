@@ -94,7 +94,7 @@ Meça novamente em 15min`);
         throw new Error("Usuário não autenticado");
       }
 
-      const response = await fetch("https://glico-flow-api.onrender.com/api/measurements", {
+      const response = await fetch("http://localhost:5000/api/measurements", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

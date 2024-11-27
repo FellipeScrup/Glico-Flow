@@ -5,10 +5,6 @@
 ```markdown
 # Glico Flow 🩺
 
-![GitHub repo size](https://img.shields.io/github/repo-size/FellipeScrup/Glico-Flow)
-![GitHub language count](https://img.shields.io/github/languages/count/FellipeScrup/Glico-Flow)
-![GitHub top language](https://img.shields.io/github/languages/top/FellipeScrup/Glico-Flow)
-
 Um aplicativo web moderno para monitoramento e controle de glicemia, desenvolvido com foco em pessoas com diabetes.
 
 ## 🌟 Funcionalidades
@@ -108,6 +104,3 @@ Se você tiver alguma dúvida ou sugestão, não hesite em entrar em contato:
 ---
 Desenvolvido com 💙 por Fellipe Scrup e Jvzinho
 ```
-
-
-Adicionei o badge do LinkedIn mantendo o estilo visual consistente com os outros badges. Agora o README tem três formas de contato: Github, LinkedIn e Gmail.

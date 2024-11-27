@@ -1,0 +1,149 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.dialog {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease;
+}
+
+.dialog h2 {
+  margin: 0 0 20px;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dateInputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.inputGroup input {
+  padding: 12px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.formatSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formatOptions {
+  display: flex;
+  gap: 12px;
+}
+
+.formatButton {
+  flex: 1;
+  padding: 12px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.formatButton.active {
+  background: #4361EE;
+  color: white;
+  border-color: #4361EE;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.cancelButton,
+.exportButton {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelButton {
+  padding: 8px 24px;
+  border-radius: 24px;
+  border: none;
+  background: linear-gradient(135deg, #E5E7EB, #D1D5DB);
+  color: #4B5563;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+}
+
+.exportButton {
+  padding: 8px 24px;
+  border-radius: 24px;
+  border: none;
+  background: linear-gradient(135deg, #4361EE, #4CC9F0);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+}
+
+.exportButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(67, 97, 238, 0.3);
+}
+
+.exportButton:disabled,
+.cancelButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.actions button:not(.exportButton) {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+} 

@@ -676,4 +676,10 @@
 .alertCard:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 24px rgba(255, 86, 86, 0.2);
+}
+
+.input-base:focus {
+  border-color: #4361EE;
+  box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.1);
+  transform: translateY(-1px);
 } 
