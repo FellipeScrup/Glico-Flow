@@ -12,11 +12,6 @@
 
 ## 🚀 **Funcionalidades**
 
-<div align="center">
-<img src="https://via.placeholder.com/300" alt="Dashboard Ilustração" width="300px"/><br>
-*Visualize, registre e cuide da sua saúde com facilidade!*
-</div>
-
 - **📊 Dashboard Interativo:** Métricas claras e organizadas.
 - **📝 Registro de Medições:** Registre e acompanhe seus níveis glicêmicos.
 - **🎯 Metas Personalizadas:** Defina objetivos alinhados ao seu tratamento.
