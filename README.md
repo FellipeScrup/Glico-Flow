@@ -24,11 +24,6 @@
 
 ## 🎨 **Design Inovador**
 
-<div align="center">
-<img src="https://via.placeholder.com/300" alt="Design Responsivo" width="300px"/><br>
-*Uma experiência moderna, adaptativa e fluida!*
-</div>
-
 - Interface **intuitiva e elegante**.
 - **Animações suaves** para um feedback visual rico.
 - Totalmente **responsivo**, garantindo ótima usabilidade em:
@@ -51,11 +46,6 @@
 ---
 
 ## ⚙️ **Como Configurar**
-
-<div align="center">
-<img src="https://via.placeholder.com/500x300" alt="Instalação" width="500px"/><br>
-*Configure o Glico Flow e comece a usá-lo em poucos passos!*
-</div>
 
 ### Pré-requisitos
 - Node.js instalado
