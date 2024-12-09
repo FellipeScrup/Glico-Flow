@@ -1,54 +1,59 @@
+# 🌟 **Glico Flow** 🩺
 
+Um aplicativo web moderno e intuitivo, criado para facilitar o monitoramento e o controle da glicemia. Desenvolvido com carinho para atender às necessidades de pessoas com diabetes.
 
+---
 
+## 🚀 **Funcionalidades Principais**
 
-```markdown
-# Glico Flow 🩺
+- **📊 Dashboard Interativo:** Visualize métricas e tendências importantes de forma clara.
+- **📝 Registro de Medições:** Registre e acompanhe suas medições glicêmicas.
+- **🎯 Metas Personalizadas:** Estabeleça metas alinhadas às suas necessidades.
+- **⚠️ Alertas Inteligentes:** Notificações automáticas de hipo/hiperglicemia.
+- **💪 Recomendações de Saúde:** Dicas personalizadas para melhorar seu bem-estar.
+- **🍽️ Sugestões Nutricionais:** Ideias de refeições para apoiar sua rotina.
+- **🏃‍♂️ Recomendações de Exercícios:** Planos de atividade física adaptados ao seu estilo de vida.
 
-Um aplicativo web moderno para monitoramento e controle de glicemia, desenvolvido com foco em pessoas com diabetes.
+---
 
-## 🌟 Funcionalidades
+## 🛠️ **Tecnologias Utilizadas**
 
-- 📊 Dashboard interativo com métricas importantes
-- 📝 Registro de medições de glicemia
-- 🎯 Definição de metas personalizadas
-- ⚠️ Alertas de hipo/hiperglicemia
-- 💪 Recomendações de saúde personalizadas
-- 🍽️ Sugestões nutricionais
-- 🏃‍♂️ Recomendações de exercícios
+- **Framework Frontend:** Next.js 13
+- **UI Library:** React
+- **Estilo:** CSS Modules
+- **Arquitetura:** API RESTful
+- **Design:** Responsivo e com animações CSS modernas
 
-## 🛠️ Tecnologias
+---
 
-- Next.js 13
-- React
-- CSS Modules
-- API RESTful
-- Animações CSS
-- Design Responsivo
+## 🎨 **Design e Experiência do Usuário**
 
-## 🎨 Design
+- Interface **intuitiva e moderna**.
+- **Feedback visual** através de animações suaves.
+- **Design responsivo** para desktop, tablets e dispositivos móveis.
+- **Paleta de cores consistente** e elementos visuais informativos.
 
-- Interface moderna e intuitiva
-- Feedback visual através de animações suaves
-- Design adaptativo para diferentes dispositivos
-- Paleta de cores consistente
-- Elementos visuais informativos
+---
 
-## 📱 Responsividade
+## 📱 **Totalmente Responsivo**
 
-O aplicativo é totalmente responsivo:
-- Desktop
-- Tablet
-- Mobile
-- Diferentes tamanhos de tela
+- **Desktop:** Navegação rica e interativa.
+- **Tablet:** Experiência fluida em telas médias.
+- **Mobile:** Otimizado para telas menores sem perder funcionalidade.
 
-## ⚙️ Instalação
+---
 
+## ⚙️ **Como Configurar**
+
+### **Pré-requisitos**
+- Node.js instalado na máquina.
+
+### **Passos para Instalação**
 ```bash
 # Clone o repositório
 git clone https://github.com/FellipeScrup/Glico-Flow.git
 
-# Entre no diretório
+# Navegue para o diretório do projeto
 cd Glico-Flow
 
 # Instale as dependências
@@ -58,49 +63,57 @@ npm install
 npm run dev
 ```
 
-## 🤝 Contribuidores
+---
+
+## 🤝 **Contribuidores**
 
 <table>
   <tr>
     <td align="center">
       <a href="https://github.com/FellipeScrup">
-        <img src="https://github.com/FellipeScrup.png" width="100px;" alt="Foto do Fellipe"/><br>
-        <sub>
-          <b>Fellipe Scrup</b>
-        </sub>
+        <img src="https://github.com/FellipeScrup.png" width="100px;" alt="Foto de Fellipe"/><br>
+        <sub><b>Fellipe Scrup</b></sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/Jvzinnho">
-        <img src="https://github.com/Jvzinnho.png" width="100px;" alt="Foto do Jvzinho"/><br>
-        <sub>
-          <b>Jvzinho</b>
-        </sub>
+        <img src="https://github.com/Jvzinnho.png" width="100px;" alt="Foto de Jvzinho"/><br>
+        <sub><b>Jvzinho</b></sub>
       </a>
     </td>
   </tr>
 </table>
 
-## 📝 Licença
+---
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+## 🌟 **Funcionalidades Futuras**
 
-## 🌟 Features Planejadas
-
-- [ ] Modo escuro
-- [ ] Exportação de dados
-- [ ] Gráficos avançados
-- [ ] Integração com dispositivos
-- [ ] Lembretes personalizados
-
-## 📞 Contato
-
-Se você tiver alguma dúvida ou sugestão, não hesite em entrar em contato:
-
-[![Github Badge](https://img.shields.io/badge/-Github-000?style=flat-square&logo=Github&logoColor=white&link=https://github.com/FellipeScrup)](https://github.com/FellipeScrup)
-[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/fellipe-scruph/)](https://www.linkedin.com/in/fellipe-scruph/)
-[![Gmail Badge](https://img.shields.io/badge/-Gmail-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:fellipescruph@gmail.com)](mailto:fellipescruph@gmail.com)
+- [ ] **Modo Escuro:** Personalize o visual do app.
+- [ ] **Exportação de Dados:** Baixe seus registros em formatos úteis.
+- [ ] **Gráficos Avançados:** Insights mais profundos sobre seus dados.
+- [ ] **Integração com Dispositivos:** Sincronize com medidores e wearables.
+- [ ] **Lembretes Personalizados:** Receba notificações para medições e cuidados.
 
 ---
-Desenvolvido com 💙 por Fellipe Scrup e Jvzinho
-```
+
+## 📝 **Licença**
+
+Este projeto está licenciado sob a **MIT License**. Consulte o arquivo [LICENSE](LICENSE) para mais informações.
+
+---
+
+## 📞 **Contato**
+
+Se tiver dúvidas ou sugestões, entre em contato:
+
+[![GitHub](https://img.shields.io/badge/GitHub-FellipeScrup-000?style=for-the-badge&logo=github)](https://github.com/FellipeScrup)  
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Fellipe%20Scrup-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/fellipe-scruph/)  
+[![Email](https://img.shields.io/badge/Gmail-fellipescruph%40gmail.com-c14438?style=for-the-badge&logo=gmail)](mailto:fellipescruph@gmail.com)
+
+---
+
+<div align="center">
+
+### Desenvolvido com 💙 por **Fellipe Scrup** e **Jvzinho**
+
+</div>
